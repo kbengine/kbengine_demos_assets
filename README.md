@@ -3,7 +3,7 @@
 
 ##开始
 
-请将这个demo的整个文件夹放置于kbengine/文件夹中
+请将这个demo的整个文件夹放置于引擎根目录"kbengine/"-><kbengine_demos_assets>文件夹
 
 
 ##启动服务端
