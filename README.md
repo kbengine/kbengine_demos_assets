@@ -1,6 +1,11 @@
 这是一个KBEngine服务端demos资产库
 ========
 
+##开始
+
+请将这个demo的整个文件夹放置于kbengine/文件夹中
+
+
 ##启动服务端
 
 使用固定参数来启动：(参数的意义:http://www.kbengine.org/cn/docs/startup_shutdown.html)
