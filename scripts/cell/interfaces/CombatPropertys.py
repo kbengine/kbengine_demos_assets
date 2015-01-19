@@ -7,7 +7,9 @@ class CombatPropertys:
 		self.HP_Max = 100
 		self.MP_Max = 100
 		
-		self.fullPower()
+		# 非死亡状态才需要补满
+		if not self.isState(GlobalDefine.ENTITY_STATE_DEAD):
+			self.fullPower()
 	
 	def fullPower(self):
 		"""
