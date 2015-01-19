@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import KBEngine
+import GlobalDefine
 from KBEDebug import * 
 
 class CombatPropertys:
@@ -8,7 +9,7 @@ class CombatPropertys:
 		self.MP_Max = 100
 		
 		# 非死亡状态才需要补满
-		if not self.isState(GlobalDefine.ENTITY_STATE_DEAD):
+		if not self.isState(GlobalDefine.ENTITY_STATE_DEAD) and self.HP == 0 and self.MP == 0:
 			self.fullPower()
 	
 	def fullPower(self):
