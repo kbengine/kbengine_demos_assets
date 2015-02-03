@@ -71,7 +71,7 @@ def onAutoLoadEntityCreate(entityType, dbid):
 	自动加载的entity创建方法，引擎允许脚本层重新实现实体的创建，如果脚本不实现这个方法
 	引擎底层使用createBaseAnywhereFromDBID来创建实体
 	"""
-	INFO_MSG('onAutoLoadEntityCreate: entityType=%s, dbid=%i' % (entityType% dbid))
+	INFO_MSG('onAutoLoadEntityCreate: entityType=%s, dbid=%i' % (entityType, dbid))
 	KBEngine.createBaseAnywhereFromDBID(entityType, dbid)
 	
 def onInit(isReload):
