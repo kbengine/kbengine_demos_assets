@@ -4,19 +4,19 @@ import Watcher
 import d_spaces
 from KBEDebug import *
 
-def onBaseAppReady(bootstrapIdx):
+def onBaseAppReady(isBootstrap):
 	"""
 	KBEngine method.
 	baseapp已经准备好了
-	@param bootstrapIdx: 当前baseapp的启动顺序
-	@type bootstrapIdx: INT32
+	@param isBootstrap: 是否为第一个启动的baseapp
+	@type isBootstrap: BOOL
 	"""
-	INFO_MSG('onBaseAppReady: bootstrapIdx=%s' % bootstrapIdx)
+	INFO_MSG('onBaseAppReady: isBootstrap=%s' % isBootstrap)
 	
 	# 安装监视器
 	Watcher.setup()
 	
-	if bootstrapIdx == 1:
+	if isBootstrap:
 		# 创建spacemanager
 		KBEngine.createBaseLocally( "Spaces", {} )
 	
@@ -31,15 +31,15 @@ def onBaseAppShutDown(state):
 	"""
 	INFO_MSG('onBaseAppShutDown: state=%i' % state)
 	
-def onReadyForLogin(bootstrapIdx):
+def onReadyForLogin(isBootstrap):
 	"""
 	KBEngine method.
 	如果返回值大于等于1.0则初始化全部完成, 否则返回准备的进度值0.0~1.0。
 	在此可以确保脚本层全部初始化完成之后才开放登录。
-	@param bootstrapIdx: 当前baseapp的启动顺序
-	@type bootstrapIdx: INT32
+	@param isBootstrap: 是否为第一个启动的baseapp
+	@type isBootstrap: BOOL
 	"""
-	if bootstrapIdx != 1:
+	if not isBootstrap:
 		INFO_MSG('initProgress: completed!')
 		return 1.0
 		
