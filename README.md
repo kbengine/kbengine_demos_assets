@@ -5,12 +5,7 @@
 
 请将kbengine_demos_assets整个文件夹放置于服务端引擎根目录中，通常是这样:
 
-	kbengine/
-		-/ assets
-		-/ docs
-		-/ kbe
-		-/ <kbengine_demos_assets>
-		-/ ...
+![demo_configure](http://www.kbengine.org/assets/img/screenshots/demo_copy_kbengine.jpg)
 
 
 ##启动服务端
