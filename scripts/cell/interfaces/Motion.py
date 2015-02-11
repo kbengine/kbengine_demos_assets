@@ -134,7 +134,7 @@ class Motion:
 			else:
 				destPos = Math.Vector3(position)
 			
-			self.moveToPoint(destPos, speed, None, 1, 1)
+			self.moveToPoint(destPos, speed, dist, None, 1, 1)
 
 	def getStopPoint(self, yaw = None, rayLength = 100.0):
 		"""
