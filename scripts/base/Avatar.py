@@ -56,7 +56,7 @@ class Avatar(KBEngine.Proxy,
 					self.cellData["spaceUType"] = 3
 					spacedatas = d_spaces.datas [self.cellData["spaceUType"]]
 					self.cellData["position"] = spacedatas.get("spawnPos", (0,0,0))
-			else:
+			elif self.cellData["spaceUType"] != 1:
 				self.cellData["spaceUType"] = 1
 				spacedatas = d_spaces.datas [self.cellData["spaceUType"]]
 				self.cellData["position"] = spacedatas.get("spawnPos", (0,0,0))
