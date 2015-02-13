@@ -31,8 +31,10 @@ class Monster(KBEngine.Entity,
 		Spell.__init__(self) 
 		AI.__init__(self) 
 		
+		# entity所在的层，可以设置多个不同的navmesh层来寻路, 这里20002001是飞龙，
+		# 第0层是地面，第1层是忽略建筑物的寻路层
 		if self.modelID == 20002001:
-			self.layer = 1 # entity所在的层，可以设置多个不同的navmesh层来寻路
+			self.layer = 1 
 			
 	def initEntity(self):
 		"""
