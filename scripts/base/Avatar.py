@@ -120,7 +120,7 @@ class Avatar(KBEngine.Proxy,
 		INFO_MSG("Avatar[%i].onClientGetCell:%s" % (self.id, self.client))
 		
 	def onDestroyTimer(self, tid, tno):
-		DEBUG_MSG("Avatar::onTimer: %i, tid:%i, arg:%i" % (self.id, tid, tno))
+		DEBUG_MSG("Avatar::onDestroyTimer: %i, tid:%i, arg:%i" % (self.id, tid, tno))
 		self.destroySelf()
 
 Avatar._timermap = {}
