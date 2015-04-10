@@ -3,6 +3,7 @@ import KBEngine
 import random
 import SCDefine
 import time
+import GlobalConst
 import d_spaces
 import d_avatar_inittab
 from KBEDebug import *
@@ -19,15 +20,6 @@ class Avatar(KBEngine.Proxy,
 		KBEngine.Proxy.__init__(self)
 		GameObject.__init__(self)
 		Teleport.__init__(self)
-
-		# 如果登录是一个副本, 无论如何登录都放置在主场景上
-		spacedatas = d_spaces.datas [self.cellData["spaceUType"]]
-		avatar_inittab = d_avatar_inittab.datas[self.roleType]
-
-		if "Duplicate" in spacedatas["entityType"]:
-			self.cellData["spaceUType"] = avatar_inittab["spaceUType"]
-			self.cellData["direction"] = (0, 0, avatar_inittab["spawnYaw"])
-			self.cellData["position"] = avatar_inittab["spawnPos"]
 		
 		self.accountEntity = None
 		self.cellData["dbid"] = self.databaseID
@@ -43,27 +35,7 @@ class Avatar(KBEngine.Proxy,
 		cell部分。
 		"""
 		INFO_MSG("Avatar[%i-%s] entities enable. spaceUTypeB=%s, mailbox:%s" % (self.id, self.nameB, self.spaceUTypeB, self.client))
-		
-		if hasattr(self, "cellData"):
-			# 防止使用统一个号登陆不同的demo造成无法找到匹配的地图从而无法加载资源导致无法进入游戏
-			# 这里检查一下， 发现不对则强制同步到匹配的地图
-			if self.getClientType() == 2:
-				self.cellData["spaceUType"] = 2
-				spacedatas = d_spaces.datas [self.cellData["spaceUType"]]
-				self.cellData["position"] = spacedatas.get("spawnPos", (0,0,0))
-			elif self.getClientType() == 5 or self.getClientType() == 1:
-				if self.cellData["spaceUType"] == 1 or self.cellData["spaceUType"] == 2:
-					self.cellData["spaceUType"] = 3
-					spacedatas = d_spaces.datas [self.cellData["spaceUType"]]
-					self.cellData["position"] = spacedatas.get("spawnPos", (0,0,0))
-			elif self.cellData["spaceUType"] != 1:
-				self.cellData["spaceUType"] = 1
-				spacedatas = d_spaces.datas [self.cellData["spaceUType"]]
-				self.cellData["position"] = spacedatas.get("spawnPos", (0,0,0))
-			
-			self.spaceUTypeB = self.cellData["spaceUType"]
-		
-		KBEngine.globalData["Spaces"].loginToSpace(self, self.spaceUTypeB, {})
+		Teleport.onEntitiesEnabled(self)
 		
 	def onGetCell(self):
 		"""

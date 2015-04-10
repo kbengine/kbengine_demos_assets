@@ -3,6 +3,7 @@ import KBEngine
 import random
 import time
 import d_spaces
+import GlobalConst
 from AVATAR_INFOS import TAvatarInfos
 from AVATAR_INFOS import TAvatarInfosList
 from AVATAR_DATA import TAvatarData
@@ -34,8 +35,8 @@ class Account(KBEngine.Proxy):
 		该entity被正式激活为可使用， 此时entity已经建立了client对应实体， 可以在此创建它的
 		cell部分。
 		"""
-		INFO_MSG("Account[%i]::onEntitiesEnabled:entities enable. mailbox:%s, clientType(%i), hasAvatar=%s, accountName=%s" % \
-			(self.id, self.client, self.getClientType(), self.activeCharacter, self.__ACCOUNT_NAME__))
+		INFO_MSG("Account[%i]::onEntitiesEnabled:entities enable. mailbox:%s, clientType(%i), clientDatas=(%s), hasAvatar=%s, accountName=%s" % \
+			(self.id, self.client, self.getClientType(), self.getClientDatas(), self.activeCharacter, self.__ACCOUNT_NAME__))
 			
 	def onLogOnAttempt(self, ip, port, password):
 		"""
@@ -112,15 +113,7 @@ class Account(KBEngine.Proxy):
 		CLIENT_TYPE_BOTS				= 4,	// bots
 		CLIENT_TYPE_MINI				= 5,	// 微型客户端
 		"""
-		spaceUType = 1
-		
-		if self.getClientType() == 2:
-			spaceUType = 2
-		elif self.getClientType() == 5 or self.getClientType() == 1:
-			spaceUType = 3
-		else:
-			spaceUType = 1
-		
+		spaceUType = GlobalConst.g_demoMaps.get(self.getClientDatas(), 1)
 		spaceData = d_spaces.datas.get(spaceUType)
 		
 		props = {
