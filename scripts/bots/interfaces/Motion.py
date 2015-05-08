@@ -7,12 +7,29 @@ class Motion:
 	def __init__(self):
 		self.set_moveSpeed(0)
 
-	def onMoveToPoint(self, destination, velocity, faceMovement, moveVertically):
+	def onMove(self, controllerId, userarg):
 		"""
 		KBEngine method.
-		这个entity将要移动到某个点， 由服务器通知
+		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
 		"""
-		KBExtra.moveToPoint(self.id, destination, velocity, faceMovement, moveVertically)
+		DEBUG_MSG("%s::onMove: %i controllerId =%i, userarg=%s" % \
+						(self.getScriptName(), self.id, controllerId, userarg))
+
+	def onMoveFailure(self, controllerId, userarg):
+		"""
+		KBEngine method.
+		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
+		"""
+		DEBUG_MSG("%s::onMoveFailure: %i controllerId =%i, userarg=%s" % \
+						(self.getScriptName(), self.id, controllerId, userarg))
+		
+	def onMoveOver(self, controllerId, userarg):
+		"""
+		KBEngine method.
+		使用引擎的任何移动相关接口， 在entity移动结束时均会调用此接口
+		"""
+		DEBUG_MSG("%s::onMoveOver: %i controllerId =%i, userarg=%s" % \
+						(self.getScriptName(), self.id, controllerId, userarg))
 		
 	def set_moveSpeed(self, oldValue):
 		"""

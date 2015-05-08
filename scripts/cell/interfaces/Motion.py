@@ -36,7 +36,7 @@ class Motion:
 		KBEngine method.
 		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
 		"""
-		DEBUG_MSG("%s::onMove: %i controllerId =%i, userarg=%s" % \
+		DEBUG_MSG("%s::onMoveFailure: %i controllerId =%i, userarg=%s" % \
 						(self.getScriptName(), self.id, controllerId, userarg))
 		
 		self.isMoving = False
@@ -45,7 +45,7 @@ class Motion:
 		"""
 		KBEngine method.
 		使用引擎的任何移动相关接口， 在entity移动结束时均会调用此接口
-		"""
+		"""	
 		self.isMoving = False
 
 	def randomWalk(self, basePos):

@@ -10,6 +10,7 @@ from interfaces.Flags import Flags
 from interfaces.Combat import Combat
 from interfaces.Spell import Spell
 from interfaces.SkillBox import SkillBox
+from interfaces.Motion import Motion
 
 class Avatar(KBEngine.Entity,
 			GameObject,
@@ -19,6 +20,7 @@ class Avatar(KBEngine.Entity,
 			Combat, 
 			Spell, 
 			Dialog,
+			Motion,
 			Teleport):
 	def __init__(self):
 		KBEngine.Entity.__init__(self)
@@ -29,6 +31,7 @@ class Avatar(KBEngine.Entity,
 		Combat.__init__(self) 
 		Spell.__init__(self) 
 		Dialog.__init__(self)
+		Motion.__init__(self)
 		Teleport.__init__(self)
 		
 	def onEnterSpace(self):
