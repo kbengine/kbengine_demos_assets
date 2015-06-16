@@ -10,5 +10,3 @@ class NPCObject(GameObject):
 	def __init__(self):
 		GameObject.__init__(self)
 		
-NPCObject._timermap = {}
-NPCObject._timermap.update(GameObject._timermap)

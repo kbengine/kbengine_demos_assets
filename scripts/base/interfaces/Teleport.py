@@ -19,6 +19,9 @@ class Teleport:
 			self.cellData["direction"] = (0, 0, avatar_inittab["spawnYaw"])
 			self.cellData["position"] = avatar_inittab["spawnPos"]
 
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
 	def onEntitiesEnabled(self):
 		"""
 		KBEngine method.
@@ -40,5 +43,5 @@ class Teleport:
 		
 		KBEngine.globalData["Spaces"].loginToSpace(self, self.spaceUTypeB, {})
 
-Teleport._timermap = {}
+
 

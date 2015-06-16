@@ -39,7 +39,7 @@ class Spaces(KBEngine.Base, GameObject):
 	def getSpaceAllocs(self):
 		return self._spaceAllocs
 		
-	def createSpaceOnTimer(self, tid, tno):
+	def createSpaceOnTimer(self, tid):
 		"""
 		创建space
 		"""
@@ -75,6 +75,20 @@ class Spaces(KBEngine.Base, GameObject):
 		"""
 		self._spaceAllocs[spaceUType].teleportSpace(entityMailbox, position, direction, context)
 
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_CREATE_SPACES == userArg:
+			self.createSpaceOnTimer(tid)
+		
+		GameObject.onTimer(self, tid, userArg)
+		
 	def onSpaceLoseCell(self, spaceUType, spaceKey):
 		"""
 		defined method.
@@ -89,6 +103,3 @@ class Spaces(KBEngine.Base, GameObject):
 		"""
 		self._spaceAllocs[spaceUType].onSpaceGetCell(spaceMailbox, spaceKey)
 
-Spaces._timermap = {}
-Spaces._timermap.update(GameObject._timermap)
-Spaces._timermap[SCDefine.TIMER_TYPE_CREATE_SPACES] = Spaces.createSpaceOnTimer

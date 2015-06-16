@@ -9,16 +9,31 @@ from KBEDebug import *
 from interfaces.GameObject import GameObject
 
 class Gate(KBEngine.Entity, GameObject):
+	"""
+	这是一个传送门实体，当玩家进入传送门“self.addProximity(5.0, 0, 0)”的区域，
+	传送门将玩家传送至指定地方
+	"""
 	def __init__(self):
 		KBEngine.Entity.__init__(self)
 		GameObject.__init__(self) 
 		
 		self.addTimer(1, 0, SCDefine.TIMER_TYPE_HEARDBEAT)				# 心跳timer, 每1秒一次
 
-	# ----------------------------------------------------------------
-	# callback
-	# ----------------------------------------------------------------
-	def onHeardTimer(self, tid, tno):
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_HEARDBEAT == userArg:
+			self.onHeardTimer()
+		
+		GameObject.onTimer(self, tid, userArg)
+		
+	def onHeardTimer(self):
 		"""
 		entity的心跳
 		"""
@@ -59,6 +74,3 @@ class Gate(KBEngine.Entity, GameObject):
 		INFO_MSG("%s::onLeaveTrap: %i entityLeaving=(%s)%i." % (self.getScriptName(), self.id, \
 				entityLeaving.getScriptName(), entityLeaving.id))
 				
-Gate._timermap = {}
-Gate._timermap.update(GameObject._timermap)
-Gate._timermap[SCDefine.TIMER_TYPE_HEARDBEAT] = Gate.onHeardTimer

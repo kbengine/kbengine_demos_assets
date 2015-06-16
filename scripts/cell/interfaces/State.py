@@ -13,18 +13,12 @@ class State:
 		self._forbidCounter = [0] * len(GlobalDefine.FORBID_ALL)
 		self.forbidCounterInc(GlobalDefine.FORBID_ACTIONS[self.state])
 
-	# ----------------------------------------------------------------
-	# public
-	# ----------------------------------------------------------------
 	def initEntity(self):
 		"""
 		virtual method.
 		"""
 		pass
 		
-	# ----------------------------------------------------------------
-	# public
-	# ----------------------------------------------------------------
 	def isState(self, state):
 		return self.state == state
 	
@@ -90,9 +84,9 @@ class State:
 			for fb in fbList:
 				self.onForbidChanged_(fb, False)
 		
-	# ----------------------------------------------------------------
-	# callback
-	# ----------------------------------------------------------------
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
 	def onForbidChanged_(self, forbid, isInc):
 		"""
 		virtual method.
@@ -118,9 +112,9 @@ class State:
 		#INFO_MSG("%i oldSubstate=%i to newSubstate=%i" % (self.id, oldSubState, newSubState))
 		pass
 		
-	# ----------------------------------------------------------------
-	# defined
-	# ----------------------------------------------------------------
+	#--------------------------------------------------------------------------------------------
+	#                              defined
+	#--------------------------------------------------------------------------------------------
 	def changeState(self, state):
 		"""
 		defined
@@ -134,4 +128,4 @@ class State:
 			self.forbidCounterInc(GlobalDefine.FORBID_ACTIONS[state])
 			self.onStateChanged_(oldstate, state)
 
-State._timermap = {}
+

@@ -7,6 +7,7 @@ from KBEDebug import *
 
 class SkillBox:
 	def __init__(self):
+		# 如果玩家没有学习技能，默认添加这些技能
 		if len(self.skills) == 0:
 			self.skills.append(1)
 			self.skills.append(1000101)
@@ -15,7 +16,15 @@ class SkillBox:
 			self.skills.append(4000101)
 			self.skills.append(5000101)
 			self.skills.append(6000101)
-			
+
+	def hasSkill(self, skillID):
+		"""
+		"""
+		return skillID in self.skills
+
+	#--------------------------------------------------------------------------------------------
+	#                              defined
+	#--------------------------------------------------------------------------------------------
 	def requestPull(self, exposed):
 		"""
 		exposed
@@ -38,11 +47,6 @@ class SkillBox:
 		defined method.
 		"""
 		self.skills.remove(skillID)
-
-	def hasSkill(self, skillID):
-		"""
-		"""
-		return skillID in self.skills
 		
 	def useTargetSkill(self, srcEntityID, skillID, targetID):
 		"""
@@ -53,5 +57,3 @@ class SkillBox:
 			return
 		
 		self.spellTarget(skillID, targetID)
-		
-SkillBox._timermap = {}

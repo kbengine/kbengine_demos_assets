@@ -28,6 +28,4 @@ class SpaceDuplicate(Space):
 			del self.avatars[entityID]
 		
 		Space.onLeave(self, entityID)
-		
-SpaceDuplicate._timermap = {}
-SpaceDuplicate._timermap.update(Space._timermap)
+

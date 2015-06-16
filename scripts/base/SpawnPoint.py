@@ -9,5 +9,4 @@ class SpawnPoint(KBEngine.Base, GameObject):
 		GameObject.__init__(self)
 		self.createCellEntity(self.createToCell)
 		
-SpawnPoint._timermap = {}
-SpawnPoint._timermap.update(GameObject._timermap)
+

@@ -21,32 +21,6 @@ class Motion:
 			#INFO_MSG("%i stop motion." % self.id)
 			self.cancelController("Movement")
 			self.isMoving = False
-			
-	def onMove(self, controllerId, userarg):
-		"""
-		KBEngine method.
-		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
-		"""
-		#DEBUG_MSG("%s::onMove: %i controllerId =%i, userarg=%s" % \
-		#				(self.getScriptName(), self.id, controllerId, userarg))
-		self.isMoving = True
-		
-	def onMoveFailure(self, controllerId, userarg):
-		"""
-		KBEngine method.
-		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
-		"""
-		DEBUG_MSG("%s::onMoveFailure: %i controllerId =%i, userarg=%s" % \
-						(self.getScriptName(), self.id, controllerId, userarg))
-		
-		self.isMoving = False
-		
-	def onMoveOver(self, controllerId, userarg):
-		"""
-		KBEngine method.
-		使用引擎的任何移动相关接口， 在entity移动结束时均会调用此接口
-		"""	
-		self.isMoving = False
 
 	def randomWalk(self, basePos):
 		"""
@@ -153,4 +127,31 @@ class Motion:
 			
 		return pos
 		
-Motion._timermap = {}
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onMove(self, controllerId, userarg):
+		"""
+		KBEngine method.
+		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
+		"""
+		#DEBUG_MSG("%s::onMove: %i controllerId =%i, userarg=%s" % \
+		#				(self.getScriptName(), self.id, controllerId, userarg))
+		self.isMoving = True
+		
+	def onMoveFailure(self, controllerId, userarg):
+		"""
+		KBEngine method.
+		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
+		"""
+		DEBUG_MSG("%s::onMoveFailure: %i controllerId =%i, userarg=%s" % \
+						(self.getScriptName(), self.id, controllerId, userarg))
+		
+		self.isMoving = False
+		
+	def onMoveOver(self, controllerId, userarg):
+		"""
+		KBEngine method.
+		使用引擎的任何移动相关接口， 在entity移动结束时均会调用此接口
+		"""	
+		self.isMoving = False

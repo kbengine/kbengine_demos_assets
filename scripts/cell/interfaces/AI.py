@@ -99,10 +99,10 @@ class AI:
 		self.targetID = entityID
 		self.onTargetChanged()
 	
-	# ----------------------------------------------------------------
-	# callback
-	# ----------------------------------------------------------------
-	def onHeardTimer(self, tid, tno):
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onHeardTimer(self):
 		"""
 		entity的心跳
 		"""
@@ -282,6 +282,12 @@ class AI:
 			self.backSpawnPos()
 		else:
 			self.choiceTarget()
-		
-AI._timermap = {}
-AI._timermap[SCDefine.TIMER_TYPE_HEARDBEAT] = AI.onHeardTimer
+
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_HEARDBEAT == userArg:
+			self.onHeardTimer()

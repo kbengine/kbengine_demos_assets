@@ -51,6 +51,18 @@ class Avatar(KBEngine.Entity,
 		启动销毁entitytimer
 		"""
 		pass
+
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		GameObject.onTimer(self, tid, userArg)
+		Spell.onTimer(self, tid, userArg)
 		
 	def onGetWitness(self):
 		"""
@@ -102,13 +114,4 @@ class Avatar(KBEngine.Entity,
 		
 		self.otherClients.onJump()
 		
-Avatar._timermap = {}
-Avatar._timermap.update(GameObject._timermap)
-Avatar._timermap.update(Flags._timermap)
-Avatar._timermap.update(State._timermap)
-Avatar._timermap.update(Motion._timermap)
-Avatar._timermap.update(SkillBox._timermap)
-Avatar._timermap.update(Combat._timermap)
-Avatar._timermap.update(Spell._timermap)
-Avatar._timermap.update(Teleport._timermap)
-Avatar._timermap.update(Dialog._timermap)
+

@@ -55,9 +55,19 @@ class Monster(KBEngine.Entity,
 		"""
 		return True
 		
-	# ----------------------------------------------------------------
-	# callback
-	# ----------------------------------------------------------------
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		NPCObject.onTimer(self, tid, userArg)
+		Spell.onTimer(self, tid, userArg)
+		AI.onTimer(self, tid, userArg)
+		
 	def onWitnessed(self, isWitnessed):
 		"""
 		KBEngine method.
@@ -137,12 +147,4 @@ class Monster(KBEngine.Entity,
 		"""
 		NPCObject.onDestroy(self)
 		Combat.onDestroy(self)
-		
-Monster._timermap = {}
-Monster._timermap.update(NPCObject._timermap)
-Monster._timermap.update(Flags._timermap)
-Monster._timermap.update(State._timermap)
-Monster._timermap.update(Motion._timermap)
-Monster._timermap.update(Combat._timermap)
-Monster._timermap.update(Spell._timermap)
-Monster._timermap.update(AI._timermap)
+

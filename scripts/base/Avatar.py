@@ -74,6 +74,20 @@ class Avatar(KBEngine.Proxy,
 		# 销毁base
 		self.destroy()
 
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_DESTROY == userArg:
+			self.onDestroyTimer()
+		
+		GameObject.onTimer(self, tid, userArg)
+		
 	def onClientDeath(self):
 		"""
 		KBEngine method.
@@ -91,12 +105,9 @@ class Avatar(KBEngine.Proxy,
 		"""
 		INFO_MSG("Avatar[%i].onClientGetCell:%s" % (self.id, self.client))
 		
-	def onDestroyTimer(self, tid, tno):
-		DEBUG_MSG("Avatar::onDestroyTimer: %i, tid:%i, arg:%i" % (self.id, tid, tno))
+	def onDestroyTimer(self):
+		DEBUG_MSG("Avatar::onDestroyTimer: %i" % (self.id))
 		self.destroySelf()
 
-Avatar._timermap = {}
-Avatar._timermap.update(GameObject._timermap)
-Avatar._timermap.update(Teleport._timermap)
-Avatar._timermap[SCDefine.TIMER_TYPE_DESTROY] = Avatar.onDestroyTimer
+
 

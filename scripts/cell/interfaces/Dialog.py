@@ -4,9 +4,15 @@ from KBEDebug import *
 import dialogmgr
 
 class Dialog:
+	"""
+	与NPC对话模块，客户端通过调用dialog来驱动对话协议
+	"""
 	def __init__(self):
 		pass
 
+	#--------------------------------------------------------------------------------------------
+	#                              defined
+	#--------------------------------------------------------------------------------------------
 	def dialog(self, srcEntityID, targetID, dialogID):
 		"""
 		exposed.
@@ -21,4 +27,4 @@ class Dialog:
 			
 		dialogmgr.onGossip(dialogID, self, KBEngine.entities[targetID])
 
-Dialog._timermap = {}
+

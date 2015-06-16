@@ -13,5 +13,3 @@ class SpaceDuplicate(Space):
 	def __init__(self):
 		Space.__init__(self)
 		
-SpaceDuplicate._timermap = {}
-SpaceDuplicate._timermap.update(Space._timermap)

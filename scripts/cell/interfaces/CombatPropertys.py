@@ -4,6 +4,10 @@ import GlobalDefine
 from KBEDebug import * 
 
 class CombatPropertys:
+	"""
+	所有关于战斗的属性
+	完善的话可以根据策划excel表来直接生成这个模块
+	"""
 	def __init__(self):
 		self.HP_Max = 100
 		self.MP_Max = 100
@@ -84,4 +88,4 @@ class CombatPropertys:
 		mpmax = int(mpmax)
 		self.MP_Max = mpmax
 		
-CombatPropertys._timermap = {}
+

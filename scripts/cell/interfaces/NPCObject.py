@@ -10,6 +10,9 @@ class NPCObject(GameObject):
 	def __init__(self):
 		GameObject.__init__(self)
 
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
 	def onDestroy(self):
 		"""
 		entity销毁
@@ -19,5 +22,3 @@ class NPCObject(GameObject):
 			if spawner:
 				spawner.onEntityDestroyed(self.entityNO)
 				
-NPCObject._timermap = {}
-NPCObject._timermap.update(GameObject._timermap)

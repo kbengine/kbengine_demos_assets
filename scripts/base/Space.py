@@ -52,25 +52,7 @@ class Space(KBEngine.Base, GameObject):
 			scale, \
 			])
 		
-	def onLoseCell(self):
-		"""
-		KBEngine method.
-		entity的cell部分实体丢失
-		"""
-		KBEngine.globalData["Spaces"].onSpaceLoseCell(self.spaceUTypeB, self.spaceKey)
-		GameObject.onLoseCell(self)
-		
-	def onGetCell(self):
-		"""
-		KBEngine method.
-		entity的cell部分实体被创建成功
-		"""
-		DEBUG_MSG("Space::onGetCell: %i" % self.id)
-		self.addTimer(0.1, 0.1, SCDefine.TIMER_TYPE_SPACE_SPAWN_TICK)
-		KBEngine.globalData["Spaces"].onSpaceGetCell(self.spaceUTypeB, self, self.spaceKey)
-		GameObject.onGetCell(self)
-		
-	def spawnOnTimer(self, tid, tno):
+	def spawnOnTimer(self, tid):
 		"""
 		出生怪物
 		"""
@@ -112,6 +94,17 @@ class Space(KBEngine.Base, GameObject):
 		"""
 		entityMailbox.cell.onTeleportSpaceCB(self.cell, self.spaceUTypeB, position, direction)
 
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_SPACE_SPAWN_TICK == userArg:
+			self.spawnOnTimer(tid)
+		
+		GameObject.onTimer(self, tid, userArg)
+		
 	def onEnter(self, entityMailbox):
 		"""
 		defined method.
@@ -132,7 +125,23 @@ class Space(KBEngine.Base, GameObject):
 		
 		if self.cell is not None:
 			self.cell.onLeave(entityID)
+
+	def onLoseCell(self):
+		"""
+		KBEngine method.
+		entity的cell部分实体丢失
+		"""
+		KBEngine.globalData["Spaces"].onSpaceLoseCell(self.spaceUTypeB, self.spaceKey)
+		GameObject.onLoseCell(self)
 		
-Space._timermap = {}
-Space._timermap.update(GameObject._timermap)
-Space._timermap[SCDefine.TIMER_TYPE_SPACE_SPAWN_TICK] = Space.spawnOnTimer
+	def onGetCell(self):
+		"""
+		KBEngine method.
+		entity的cell部分实体被创建成功
+		"""
+		DEBUG_MSG("Space::onGetCell: %i" % self.id)
+		self.addTimer(0.1, 0.1, SCDefine.TIMER_TYPE_SPACE_SPAWN_TICK)
+		KBEngine.globalData["Spaces"].onSpaceGetCell(self.spaceUTypeB, self, self.spaceKey)
+		GameObject.onGetCell(self)
+		
+

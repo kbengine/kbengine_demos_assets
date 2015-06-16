@@ -34,4 +34,3 @@ class Spell:
 		"""
 		self.cell.useTargetSkill(skillID, targetID)
 
-Spell._timermap = {}

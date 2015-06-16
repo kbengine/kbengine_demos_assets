@@ -6,12 +6,6 @@ from KBEDebug import *
 class Teleport:
 	def __init__(self):
 		pass
-
-	def onDestroy(self):
-		"""
-		entity销毁
-		"""
-		self.getCurrSpaceBase().logoutSpace(self.id)
 		
 	def teleportSpace(self, spaceUType, position, direction, context):
 		"""
@@ -21,6 +15,9 @@ class Teleport:
 		assert self.base != None
 		self.getSpaces().teleportSpace(self.base, spaceUType, position, direction, SpaceContext.createContext(self, spaceUType))
 
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
 	def onTeleportSpaceCB(self, spaceCellMailbox, spaceUType, position, direction):
 		"""
 		defined.
@@ -41,4 +38,8 @@ class Teleport:
 		self.getCurrSpaceBase().onEnter(self.base)
 		self.spaceUType = self.getCurrSpace().spaceUType
 		
-Teleport._timermap = {}
+	def onDestroy(self):
+		"""
+		entity销毁
+		"""
+		self.getCurrSpaceBase().logoutSpace(self.id)

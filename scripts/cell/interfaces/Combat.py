@@ -5,6 +5,9 @@ from KBEDebug import *
 from interfaces.CombatPropertys import CombatPropertys
 
 class Combat(CombatPropertys):
+	"""
+	关于战斗的一些功能
+	"""
 	def __init__(self):
 		CombatPropertys.__init__(self)
 		
@@ -27,12 +30,6 @@ class Combat(CombatPropertys):
 		"""
 		self.level += lv
 		self.onLevelChanged(lv)
-		
-	def onLevelChanged(self, addlv):
-		"""
-		virtual method.
-		"""
-		pass
 		
 	def isDead(self):
 		"""
@@ -57,32 +54,6 @@ class Combat(CombatPropertys):
 		self.onDie(killerID)
 		self.changeState(GlobalDefine.ENTITY_STATE_DEAD)
 		self.onAfterDie(killerID)
-		
-	def onDie(self, killerID):
-		"""
-		virtual method.
-		"""
-		self.setHP(0)
-		self.setMP(0)
-
-	def onBeforeDie(self, killerID):
-		"""
-		virtual method.
-		"""
-		pass
-
-	def onAfterDie(self, killerID):
-		"""
-		virtual method.
-		"""
-		pass
-	
-	def onKiller(self, entityID):
-		"""
-		defined.
-		我击杀了entity
-		"""
-		pass
 	
 	def canDie(self, attackerID, skillID, damageType, damage):
 		"""
@@ -90,12 +61,6 @@ class Combat(CombatPropertys):
 		是否可死亡
 		"""
 		return True
-
-	def onDestroy(self):
-		"""
-		entity销毁
-		"""
-		pass
 		
 	def recvDamage(self, attackerID, skillID, damageType, damage):
 		"""
@@ -125,14 +90,7 @@ class Combat(CombatPropertys):
 		
 		self.enemyLog.append(entityID)
 		self.onAddEnemy(entityID)
-	
-	def onAddEnemy(self, entityID):
-		"""
-		virtual method.
-		有敌人进入列表
-		"""
-		pass
-	
+		
 	def removeEnemy(self, entityID):
 		"""
 		defined.
@@ -143,13 +101,6 @@ class Combat(CombatPropertys):
 		
 		self.enemyLog.remove(entityID)
 		self.onRemoveEnemy(entityID)
-
-	def onRemoveEnemy(self, entityID):
-		"""
-		virtual method.
-		删除敌人
-		"""
-		pass
 	
 	def checkInTerritory(self):
 		"""
@@ -180,4 +131,57 @@ class Combat(CombatPropertys):
 				not self.checkInTerritory() or not self.checkEnemyDist(entity):
 				self.removeEnemy(self.enemyLog[idx])
 
-Combat._timermap = {}
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onLevelChanged(self, addlv):
+		"""
+		virtual method.
+		"""
+		pass
+		
+	def onDie(self, killerID):
+		"""
+		virtual method.
+		"""
+		self.setHP(0)
+		self.setMP(0)
+
+	def onBeforeDie(self, killerID):
+		"""
+		virtual method.
+		"""
+		pass
+
+	def onAfterDie(self, killerID):
+		"""
+		virtual method.
+		"""
+		pass
+	
+	def onKiller(self, entityID):
+		"""
+		defined.
+		我击杀了entity
+		"""
+		pass
+		
+	def onDestroy(self):
+		"""
+		entity销毁
+		"""
+		pass
+		
+	def onAddEnemy(self, entityID):
+		"""
+		virtual method.
+		有敌人进入列表
+		"""
+		pass
+
+	def onRemoveEnemy(self, entityID):
+		"""
+		virtual method.
+		删除敌人
+		"""
+		pass

@@ -24,12 +24,6 @@ class Spell:
 		删除buff
 		"""
 		pass
-		
-	def onBuffTick(self, tid, tno):
-		"""
-		buff的tick
-		"""
-		DEBUG_MSG("onBuffTick:%i" % tid)
 	
 	def intonate(self, skill, scObject):
 		"""
@@ -65,5 +59,21 @@ class Spell:
 	def spellPosition(self, position):
 		pass
 		
-Spell._timermap = {}
-Spell._timermap[SCDefine.TIMER_TYPE_BUFF_TICK] = Spell.onBuffTick
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_BUFF_TICK == userArg:
+			self.onBuffTick()
+
+	def onBuffTick(self):
+		"""
+		buff的tick
+		此处可以轮询所有的buff，将需要执行的buff执行
+		"""
+		DEBUG_MSG("onBuffTick")

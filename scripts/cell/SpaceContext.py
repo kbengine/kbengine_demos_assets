@@ -13,11 +13,12 @@ class SpaceContext(dict):
 	@staticmethod
 	def create(entity):
 		return {}
-		
-		
+
+
 class SpaceDuplicateContext(SpaceContext):
 	"""
-	产生space上下文
+	产生space副本的上下文
+	进入副本需要持有钥匙（spaceKey）
 	"""
 	def __init__(self, entity):
 		SpaceContext.__init__(self, entity)

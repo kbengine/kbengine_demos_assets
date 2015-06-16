@@ -48,14 +48,6 @@ class GameObject:
 	def getScriptName(self):
 		return self.__class__.__name__
 		
-	def onTimer(self, tid, userArg):
-		"""
-		KBEngine method.
-		引擎回调timer触发
-		"""
-		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		self._timermap[userArg](self, tid, userArg)
-		
 	def getCurrSpaceBase(self):
 		"""
 		获得当前space的entity baseMailbox
@@ -84,6 +76,18 @@ class GameObject:
 		if self.isState(GlobalDefine.ENTITY_STATE_DEAD):
 			self.addTimer(5, 0, SCDefine.TIMER_TYPE_DESTROY)
 			DEBUG_MSG("%s::startDestroyTimer: %i running." % (self.getScriptName(), self.id))
+	
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onTimer(self, tid, userArg):
+		"""
+		KBEngine method.
+		引擎回调timer触发
+		"""
+		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
+		if SCDefine.TIMER_TYPE_DESTROY == userArg:
+			self.onDestroyEntityTimer()
 			
 	def onStateChanged_(self, oldstate, newstate):
 		"""
@@ -127,11 +131,8 @@ class GameObject:
 		"""
 		DEBUG_MSG("%s::onRestore: %s" % (self.getScriptName(), self.base))
 
-	def onDestroyEntityTimer(self, tid, tno):
+	def onDestroyEntityTimer(self):
 		"""
 		entity的延时销毁timer
 		"""
 		self.destroy()
-		
-GameObject._timermap = {}
-GameObject._timermap[SCDefine.TIMER_TYPE_DESTROY] = GameObject.onDestroyEntityTimer

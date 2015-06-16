@@ -14,4 +14,4 @@ class Combat:
 			(self.getScriptName(), self.id, attackerID, skillID, damageType, damage))
 		
 		
-Combat._timermap = {}
+

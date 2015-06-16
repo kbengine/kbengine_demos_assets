@@ -26,4 +26,4 @@ class Dialog:
 		"""
 		DEBUG_MSG("Dialog:dialog_close:: %i" % (self.id))
 				
-Dialog._timermap = {}
+

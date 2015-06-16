@@ -19,63 +19,6 @@ class Account(KBEngine.Proxy):
 		KBEngine.Proxy.__init__(self)
 		self.activeCharacter = None
 		self.relogin = time.time()
-		
-	def onTimer(self, id, userArg):
-		"""
-		KBEngine method.
-		使用addTimer后， 当时间到达则该接口被调用
-		@param id		: addTimer 的返回值ID
-		@param userArg	: addTimer 最后一个参数所给入的数据
-		"""
-		DEBUG_MSG(id, userArg)
-		
-	def onEntitiesEnabled(self):
-		"""
-		KBEngine method.
-		该entity被正式激活为可使用， 此时entity已经建立了client对应实体， 可以在此创建它的
-		cell部分。
-		"""
-		INFO_MSG("Account[%i]::onEntitiesEnabled:entities enable. mailbox:%s, clientType(%i), clientDatas=(%s), hasAvatar=%s, accountName=%s" % \
-			(self.id, self.client, self.getClientType(), self.getClientDatas(), self.activeCharacter, self.__ACCOUNT_NAME__))
-			
-	def onLogOnAttempt(self, ip, port, password):
-		"""
-		KBEngine method.
-		客户端登陆失败时会回调到这里
-		"""
-		INFO_MSG("Account[%i]::onLogOnAttempt: ip=%s, port=%i, selfclient=%s" % (self.id, ip, port, self.client))
-		"""
-		if self.activeCharacter != None:
-			return KBEngine.LOG_ON_REJECT
-
-		if ip == self.lastClientIpAddr and password == self.password:
-			return KBEngine.LOG_ON_ACCEPT
-		else:
-			return KBEngine.LOG_ON_REJECT
-		"""
-		
-		# 如果一个在线的账号被一个客户端登陆并且onLogOnAttempt返回允许
-		# 那么会踢掉之前的客户端连接
-		# 那么此时self.activeCharacter可能不为None， 常规的流程是销毁这个角色等新客户端上来重新选择角色进入
-		if self.activeCharacter:
-			self.activeCharacter.giveClientTo(self)
-			self.relogin = time.time()
-			self.activeCharacter.destroySelf()
-			self.activeCharacter = None
-			
-		return KBEngine.LOG_ON_ACCEPT
-		
-	def onClientDeath(self):
-		"""
-		KBEngine method.
-		客户端对应实体已经销毁
-		"""
-		if self.activeCharacter:
-			self.activeCharacter.accountEntity = None
-			self.activeCharacter = None
-
-		DEBUG_MSG("Account[%i].onClientDeath:" % self.id)
-		self.destroy()
 	
 	def reqAvatarList(self):
 		"""
@@ -145,6 +88,102 @@ class Account(KBEngine.Proxy):
 				break
 		
 		self.client.onRemoveAvatar(found)
+					
+	def selectAvatarGame(self, dbid):
+		"""
+		exposed.
+		客户端选择某个角色进行游戏
+		"""
+		DEBUG_MSG("Account[%i].selectAvatarGame:%i. self.activeCharacter=%s" % (self.id, dbid, self.activeCharacter))
+		# 注意:使用giveClientTo的entity必须是当前baseapp上的entity
+		if self.activeCharacter is None:
+			if dbid in self.characters:
+				self.lastSelCharacter = dbid
+				player = KBEngine.createBaseFromDBID("Avatar", dbid, self.__onAvatarCreated)
+			else:
+				ERROR_MSG("Account[%i]::selectAvatarGame: not found dbid(%i)" % (self.id, dbid))
+		else:
+			self.giveClientTo(self.activeCharacter)
+		
+	#--------------------------------------------------------------------------------------------
+	#                              Callbacks
+	#--------------------------------------------------------------------------------------------
+	def onEntitiesEnabled(self):
+		"""
+		KBEngine method.
+		该entity被正式激活为可使用， 此时entity已经建立了client对应实体， 可以在此创建它的
+		cell部分。
+		"""
+		INFO_MSG("Account[%i]::onEntitiesEnabled:entities enable. mailbox:%s, clientType(%i), clientDatas=(%s), hasAvatar=%s, accountName=%s" % \
+			(self.id, self.client, self.getClientType(), self.getClientDatas(), self.activeCharacter, self.__ACCOUNT_NAME__))
+			
+	def onLogOnAttempt(self, ip, port, password):
+		"""
+		KBEngine method.
+		客户端登陆失败时会回调到这里
+		"""
+		INFO_MSG("Account[%i]::onLogOnAttempt: ip=%s, port=%i, selfclient=%s" % (self.id, ip, port, self.client))
+		"""
+		if self.activeCharacter != None:
+			return KBEngine.LOG_ON_REJECT
+
+		if ip == self.lastClientIpAddr and password == self.password:
+			return KBEngine.LOG_ON_ACCEPT
+		else:
+			return KBEngine.LOG_ON_REJECT
+		"""
+		
+		# 如果一个在线的账号被一个客户端登陆并且onLogOnAttempt返回允许
+		# 那么会踢掉之前的客户端连接
+		# 那么此时self.activeCharacter可能不为None， 常规的流程是销毁这个角色等新客户端上来重新选择角色进入
+		if self.activeCharacter:
+			self.activeCharacter.giveClientTo(self)
+			self.relogin = time.time()
+			self.activeCharacter.destroySelf()
+			self.activeCharacter = None
+			
+		return KBEngine.LOG_ON_ACCEPT
+		
+	def onClientDeath(self):
+		"""
+		KBEngine method.
+		客户端对应实体已经销毁
+		"""
+		if self.activeCharacter:
+			self.activeCharacter.accountEntity = None
+			self.activeCharacter = None
+
+		DEBUG_MSG("Account[%i].onClientDeath:" % self.id)
+		self.destroy()		
+		
+	def __onAvatarCreated(self, baseRef, dbid, wasActive):
+		"""
+		选择角色进入游戏时被调用
+		"""
+		if wasActive:
+			ERROR_MSG("Account::__onAvatarCreated:(%i): this character is in world now!" % (self.id))
+			return
+		if baseRef is None:
+			ERROR_MSG("Account::__onAvatarCreated:(%i): the character you wanted to created is not exist!" % (self.id))
+			return
+			
+		avatar = KBEngine.entities.get(baseRef.id)
+		if avatar is None:
+			ERROR_MSG("Account::__onAvatarCreated:(%i): when character was created, it died as well!" % (self.id))
+			return
+		
+		if self.isDestroyed:
+			ERROR_MSG("Account::__onAvatarCreated:(%i): i dead, will the destroy of Avatar!" % (self.id))
+			avatar.destroy()
+			return
+			
+		info = self.characters[dbid]
+		avatar.cellData["modelID"] = d_avatar_inittab.datas[info[2]]["modelID"]
+		avatar.cellData["modelScale"] = d_avatar_inittab.datas[info[2]]["modelScale"]
+		avatar.cellData["moveSpeed"] = d_avatar_inittab.datas[info[2]]["moveSpeed"]
+		avatar.accountEntity = self
+		self.activeCharacter = avatar
+		self.giveClientTo(avatar)
 		
 	def _onCharacterSaved(self, success, avatar):
 		"""
@@ -176,49 +215,3 @@ class Account(KBEngine.Proxy):
 		
 		if self.client:
 			self.client.onCreateAvatarResult(0, avatarinfo)
-			
-	def selectAvatarGame(self, dbid):
-		"""
-		exposed.
-		客户端选择某个角色进行游戏
-		"""
-		DEBUG_MSG("Account[%i].selectAvatarGame:%i. self.activeCharacter=%s" % (self.id, dbid, self.activeCharacter))
-		# 注意:使用giveClientTo的entity必须是当前baseapp上的entity
-		if self.activeCharacter is None:
-			if dbid in self.characters:
-				self.lastSelCharacter = dbid
-				player = KBEngine.createBaseFromDBID("Avatar", dbid, self.__onAvatarCreated)
-			else:
-				ERROR_MSG("Account[%i]::selectAvatarGame: not found dbid(%i)" % (self.id, dbid))
-		else:
-			self.giveClientTo(self.activeCharacter)
-			
-	def __onAvatarCreated(self, baseRef, dbid, wasActive):
-		"""
-		选择角色进入游戏时被调用
-		"""
-		if wasActive:
-			ERROR_MSG("Account::__onAvatarCreated:(%i): this character is in world now!" % (self.id))
-			return
-		if baseRef is None:
-			ERROR_MSG("Account::__onAvatarCreated:(%i): the character you wanted to created is not exist!" % (self.id))
-			return
-			
-		avatar = KBEngine.entities.get(baseRef.id)
-		if avatar is None:
-			ERROR_MSG("Account::__onAvatarCreated:(%i): when character was created, it died as well!" % (self.id))
-			return
-		
-		if self.isDestroyed:
-			ERROR_MSG("Account::__onAvatarCreated:(%i): i dead, will the destroy of Avatar!" % (self.id))
-			avatar.destroy()
-			return
-			
-		info = self.characters[dbid]
-		avatar.cellData["modelID"] = d_avatar_inittab.datas[info[2]]["modelID"]
-		avatar.cellData["modelScale"] = d_avatar_inittab.datas[info[2]]["modelScale"]
-		avatar.cellData["moveSpeed"] = d_avatar_inittab.datas[info[2]]["moveSpeed"]
-		avatar.accountEntity = self
-		self.activeCharacter = avatar
-		self.giveClientTo(avatar)
-		
