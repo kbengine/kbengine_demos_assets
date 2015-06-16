@@ -54,20 +54,5 @@
 
 	<CellMethods>
 	</CellMethods>
-	
-	<DetailLevels><!-- entity详情级别, 决定某些属性广播给客户端的优先级 -->
-		<NEAR>
-			<hyst>5</hyst>
-			<radius>25</radius>
-		</NEAR>
-		<MEDIUM>
-			<hyst>7</hyst>
-			<radius>50</radius>
-		</MEDIUM>
-		<FAR>
-			<hyst>10</hyst>
-			<radius>75</radius>
-		</FAR>
-	</DetailLevels>
 </root>
 
