@@ -121,7 +121,7 @@ class Motion:
 		
 		lastPos = self.position + vv;
 		
-		pos = self.raycast(self.position, vv)
+		pos = KBEngine.raycast(self.spaceID, self.layer, self.position, vv)
 		if pos == None:
 			pos = lastPos
 			
