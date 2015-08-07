@@ -98,7 +98,7 @@ class Motion:
 		speed = self.moveSpeed * 0.1
 		
 		if self.canNavigate():
-			self.navigate(Math.Vector3(position), speed, dist, speed, 512.0, 1, 0.5, None)
+			self.navigate(Math.Vector3(position), speed, dist, speed, 1, 0.5, None)
 		else:
 			if dist > 0.0:
 				destPos = Math.Vector3(position) - self.position
