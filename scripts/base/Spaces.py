@@ -58,13 +58,13 @@ class Spaces(KBEngine.Base, GameObject):
 		"""
 		self._spaceAllocs[spaceUType].loginToSpace(avatarEntity, context)
 	
-	def logoutSpace(self, avatarID, spaceID):
+	def logoutSpace(self, avatarID, spaceKey):
 		"""
 		defined method.
 		某个玩家请求登出这个space
 		"""
 		for spaceAlloc in self._spaceAllocs.values():
-			space = spaceAlloc.getSpaces().get(spaceID)
+			space = spaceAlloc.getSpaces().get(spaceKey)
 			if space:
 				space.logoutSpace(avatarID)
 				

@@ -12,6 +12,10 @@ import d_spaces_spawns
 import xml.etree.ElementTree as etree 
 
 class Space(KBEngine.Base, GameObject):
+	"""
+	一个可操控cellapp上真正space的实体
+	注意：它是一个实体，并不是真正的space，真正的space存在于cellapp的内存中，通过这个实体与之关联并操控space。
+	"""
 	def __init__(self):
 		KBEngine.Base.__init__(self)
 		GameObject.__init__(self)
