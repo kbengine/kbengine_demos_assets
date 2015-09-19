@@ -39,21 +39,21 @@ class Avatar(KBEngine.Entity,
 		KBEngine method.
 		这个entity进入了一个新的space
 		"""
-		DEBUG_MSG("%s[%i]." % (self.__class__.__name__, self.id))
+		DEBUG_MSG("%s::onEnterSpace: %i" % (self.__class__.__name__, self.id))
 
 	def onLeaveSpace(self):
 		"""
 		KBEngine method.
 		这个entity将要离开当前space
 		"""
-		DEBUG_MSG("%s[%i]." % (self.__class__.__name__, self.id))
+		DEBUG_MSG("%s::onLeaveSpace: %i" % (self.__class__.__name__, self.id))
 		
 	def onBecomePlayer( self ):
 		"""
 		KBEngine method.
 		当这个entity被引擎定义为角色时被调用
 		"""
-		DEBUG_MSG("%s[%i]." % (self.__class__.__name__, self.id))
+		DEBUG_MSG("%s::onBecomePlayer: %i" % (self.__class__.__name__, self.id))
 		
 	def onJump(self):
 		"""
