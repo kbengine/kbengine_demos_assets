@@ -49,6 +49,8 @@ class Motion:
 			self.nextMoveTime = int(time.time() + random.randint(5, 15))
 			break
 
+		return True
+
 	def resetSpeed(self):
 		walkSpeed = self.getDatas()["moveSpeed"]
 		if walkSpeed != self.moveSpeed:
