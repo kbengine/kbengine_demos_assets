@@ -11,7 +11,7 @@ class Motion:
 	移动相关的封装
 	"""
 	def __init__(self):
-		pass
+		self.nextMoveTime = time.time()
 	
 	def stopMotion(self):
 		"""
