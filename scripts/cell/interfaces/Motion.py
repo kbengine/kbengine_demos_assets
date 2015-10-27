@@ -11,7 +11,7 @@ class Motion:
 	移动相关的封装
 	"""
 	def __init__(self):
-		self.nextMoveTime = time.time()
+		self.nextMoveTime = int(time.time() + random.randint(5, 15))
 	
 	def stopMotion(self):
 		"""
