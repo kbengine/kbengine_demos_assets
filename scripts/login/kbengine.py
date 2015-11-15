@@ -4,10 +4,11 @@ import KBEngine
 from KBEDebug import *
 
 """
-loginapp进程主要处理KBEngine服务端与第三方平台的接入接出工作。
-目前支持几种功能:
+loginapp进程主要处理KBEngine服务端登陆、创建账号等工作。
+目前脚本支持几种功能:
 1: 注册账号检查
 2：登陆检查
+3：自定义socket回调，参考interface中Poller实现
 """
 
 
