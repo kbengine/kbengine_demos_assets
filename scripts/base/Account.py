@@ -70,7 +70,7 @@ class Account(KBEngine.Proxy):
 			
 		avatar = KBEngine.createBaseLocally('Avatar', props)
 		if avatar:
-			avatar.writeToDB(self._onCharacterSaved)
+			avatar.writeToDB(self._onAvatarSaved)
 		
 		DEBUG_MSG("Account[%i].reqCreateAvatar:%s. spaceUType=%i, spawnPos=%s.\n" % (self.id, name, avatar.cellData["spaceUType"], spaceData.get("spawnPos", (0,0,0))))
 		
@@ -185,11 +185,11 @@ class Account(KBEngine.Proxy):
 		self.activeCharacter = avatar
 		self.giveClientTo(avatar)
 		
-	def _onCharacterSaved(self, success, avatar):
+	def _onAvatarSaved(self, success, avatar):
 		"""
 		新建角色写入数据库回调
 		"""
-		INFO_MSG('Account::_onCharacterSaved:(%i) create avatar state: %i, %s, %i' % (self.id, success, avatar.cellData["name"], avatar.databaseID))
+		INFO_MSG('Account::_onAvatarSaved:(%i) create avatar state: %i, %s, %i' % (self.id, success, avatar.cellData["name"], avatar.databaseID))
 		
 		# 如果此时账号已经销毁， 角色已经无法被记录则我们清除这个角色
 		if self.isDestroyed:
