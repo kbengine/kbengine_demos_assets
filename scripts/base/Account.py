@@ -17,7 +17,7 @@ class Account(KBEngine.Proxy):
 	"""
 	def __init__(self):
 		KBEngine.Proxy.__init__(self)
-		self.activeCharacter = None
+		self.activeAvatar = None
 		self.relogin = time.time()
 	
 	def reqAvatarList(self):
@@ -94,16 +94,16 @@ class Account(KBEngine.Proxy):
 		exposed.
 		客户端选择某个角色进行游戏
 		"""
-		DEBUG_MSG("Account[%i].selectAvatarGame:%i. self.activeCharacter=%s" % (self.id, dbid, self.activeCharacter))
+		DEBUG_MSG("Account[%i].selectAvatarGame:%i. self.activeAvatar=%s" % (self.id, dbid, self.activeAvatar))
 		# 注意:使用giveClientTo的entity必须是当前baseapp上的entity
-		if self.activeCharacter is None:
+		if self.activeAvatar is None:
 			if dbid in self.characters:
 				self.lastSelCharacter = dbid
 				player = KBEngine.createBaseFromDBID("Avatar", dbid, self.__onAvatarCreated)
 			else:
 				ERROR_MSG("Account[%i]::selectAvatarGame: not found dbid(%i)" % (self.id, dbid))
 		else:
-			self.giveClientTo(self.activeCharacter)
+			self.giveClientTo(self.activeAvatar)
 		
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
@@ -115,7 +115,7 @@ class Account(KBEngine.Proxy):
 		cell部分。
 		"""
 		INFO_MSG("Account[%i]::onEntitiesEnabled:entities enable. mailbox:%s, clientType(%i), clientDatas=(%s), hasAvatar=%s, accountName=%s" % \
-			(self.id, self.client, self.getClientType(), self.getClientDatas(), self.activeCharacter, self.__ACCOUNT_NAME__))
+			(self.id, self.client, self.getClientType(), self.getClientDatas(), self.activeAvatar, self.__ACCOUNT_NAME__))
 			
 	def onLogOnAttempt(self, ip, port, password):
 		"""
@@ -124,7 +124,7 @@ class Account(KBEngine.Proxy):
 		"""
 		INFO_MSG("Account[%i]::onLogOnAttempt: ip=%s, port=%i, selfclient=%s" % (self.id, ip, port, self.client))
 		"""
-		if self.activeCharacter != None:
+		if self.activeAvatar != None:
 			return KBEngine.LOG_ON_REJECT
 
 		if ip == self.lastClientIpAddr and password == self.password:
@@ -135,12 +135,12 @@ class Account(KBEngine.Proxy):
 		
 		# 如果一个在线的账号被一个客户端登陆并且onLogOnAttempt返回允许
 		# 那么会踢掉之前的客户端连接
-		# 那么此时self.activeCharacter可能不为None， 常规的流程是销毁这个角色等新客户端上来重新选择角色进入
-		if self.activeCharacter:
-			self.activeCharacter.giveClientTo(self)
+		# 那么此时self.activeAvatar可能不为None， 常规的流程是销毁这个角色等新客户端上来重新选择角色进入
+		if self.activeAvatar:
+			self.activeAvatar.giveClientTo(self)
 			self.relogin = time.time()
-			self.activeCharacter.destroySelf()
-			self.activeCharacter = None
+			self.activeAvatar.destroySelf()
+			self.activeAvatar = None
 			
 		return KBEngine.LOG_ON_ACCEPT
 		
@@ -149,9 +149,9 @@ class Account(KBEngine.Proxy):
 		KBEngine method.
 		客户端对应实体已经销毁
 		"""
-		if self.activeCharacter:
-			self.activeCharacter.accountEntity = None
-			self.activeCharacter = None
+		if self.activeAvatar:
+			self.activeAvatar.accountEntity = None
+			self.activeAvatar = None
 
 		DEBUG_MSG("Account[%i].onClientDeath:" % self.id)
 		self.destroy()		
@@ -182,7 +182,7 @@ class Account(KBEngine.Proxy):
 		avatar.cellData["modelScale"] = d_avatar_inittab.datas[info[2]]["modelScale"]
 		avatar.cellData["moveSpeed"] = d_avatar_inittab.datas[info[2]]["moveSpeed"]
 		avatar.accountEntity = self
-		self.activeCharacter = avatar
+		self.activeAvatar = avatar
 		self.giveClientTo(avatar)
 		
 	def _onAvatarSaved(self, success, avatar):

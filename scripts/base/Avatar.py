@@ -65,7 +65,7 @@ class Avatar(KBEngine.Proxy,
 		# 如果帐号ENTITY存在 则也通知销毁它
 		if self.accountEntity != None:
 			if time.time() - self.accountEntity.relogin > 1:
-				self.accountEntity.activeCharacter = None
+				self.accountEntity.activeAvatar = None
 				self.accountEntity.destroy()
 				self.accountEntity = None
 			else:
