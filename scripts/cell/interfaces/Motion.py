@@ -33,14 +33,24 @@ class Motion:
 			return False
 		
 		while True:
-			rnd = random.random()
-			a = 30.0 * rnd				# 移动半径距离在30米内
-			b = 360.0 * rnd				# 随机一个角度
-			x = a * math.cos( b ) 		# 半径 * 正余玄
-			z = a * math.sin( b )
-			
-			destPos = (basePos.x + x, basePos.y, basePos.z + z)
-			
+			# 移动半径距离在30米内
+			if self.canNavigate():
+				destPos = self.getRandomPoints(basePos, 30.0, 1, 0)
+				
+				if len(destPos) == 0:
+					self.nextMoveTime = int(time.time() + random.randint(5, 15))
+					return False
+				
+				destPos = destPos[0]
+			else:
+				rnd = random.random()
+				a = 30.0 * rnd				# 移动半径距离在30米内
+				b = 360.0 * rnd				# 随机一个角度
+				x = a * math.cos( b ) 		# 半径 * 正余玄
+				z = a * math.sin( b )
+				
+				destPos = (basePos.x + x, basePos.y, basePos.z + z)
+
 			if self.position.distTo(destPos) < 2.0:
 				continue
 				
