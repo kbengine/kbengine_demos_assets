@@ -49,6 +49,7 @@ class Account(KBEngine.Proxy):
 			return
 		
 		""" 根据前端类别给出出生点
+		Reference: http://www.kbengine.org/docs/programming/clientsdkprogramming.html, client types
 		UNKNOWN_CLIENT_COMPONENT_TYPE	= 0,
 		CLIENT_TYPE_MOBILE				= 1,	// 手机类
 		CLIENT_TYPE_WIN					= 2,	// pc， 一般都是exe客户端
