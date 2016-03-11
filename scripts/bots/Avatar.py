@@ -67,3 +67,21 @@ class PlayerAvatar(Avatar):
 	def __init__(self):
 		Avatar.__init__()
 
+	def onEnterSpace(self):
+		"""
+		KBEngine method.
+		这个entity进入了一个新的space
+		"""
+		DEBUG_MSG("%s::onEnterSpace: %i" % (self.__class__.__name__, self.id))
+		KBEngine.callback(1, self.moveUpdate)
+		
+	def onLeaveSpace(self):
+		"""
+		KBEngine method.
+		这个entity将要离开当前space
+		"""
+		DEBUG_MSG("%s::onLeaveSpace: %i" % (self.__class__.__name__, self.id))
+		
+	def moveUpdate(self):
+		DEBUG_MSG("%s::moveUpdate: %i" % (self.__class__.__name__, self.id))
+		KBEngine.callback(1, self.moveUpdate)
