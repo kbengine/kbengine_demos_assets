@@ -12,8 +12,9 @@ class Motion:
 		KBEngine method.
 		使用引擎的任何移动相关接口， 在entity一次移动完成时均会调用此接口
 		"""
-		DEBUG_MSG("%s::onMove: %i controllerId =%i, userarg=%s" % \
-						(self.getScriptName(), self.id, controllerId, userarg))
+		#DEBUG_MSG("%s::onMove: %i controllerId =%i, userarg=%s" % \
+		#				(self.getScriptName(), self.id, controllerId, userarg))
+		pass
 
 	def onMoveFailure(self, controllerId, userarg):
 		"""
@@ -28,9 +29,10 @@ class Motion:
 		KBEngine method.
 		使用引擎的任何移动相关接口， 在entity移动结束时均会调用此接口
 		"""
-		DEBUG_MSG("%s::onMoveOver: %i controllerId =%i, userarg=%s" % \
-						(self.getScriptName(), self.id, controllerId, userarg))
-		
+		#DEBUG_MSG("%s::onMoveOver: %i controllerId =%i, userarg=%s" % \
+		#				(self.getScriptName(), self.id, controllerId, userarg))
+		pass
+
 	def set_moveSpeed(self, oldValue):
 		"""
 		Property method.
