@@ -33,6 +33,15 @@
 			<Flags>			CELL_PUBLIC_AND_OWN		</Flags>
 			<Persistent>		true				</Persistent>
 		</level>
+		
+		<!--
+		<playerName>
+			<Type>			UNICODE				</Type>
+			<Flags>			ALL_CLIENTS		</Flags>
+			<Persistent>		true				</Persistent>
+			<Index> UNIQUE </Index> 属性的索引类别，UNIQUE, INDEX，分别对应唯一索引、普通索引
+		</playerName>
+		-->
 
 		<own_val>
 			<Type>			UINT16				</Type>
