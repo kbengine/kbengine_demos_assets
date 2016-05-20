@@ -40,6 +40,7 @@
 			<Flags>	ALL_CLIENTS					</Flags>
 			<Persistent>	true						</Persistent>
 			<Index> 	UNIQUE 					</Index> 属性的索引类别，UNIQUE, INDEX，分别对应唯一索引、普通索引
+			<DatabaseLength> 32						</DatabaseLength>
 		</playerName>
 		-->
 
