@@ -64,7 +64,9 @@ class Avatar(KBEngine.Entity,
 		"""
 		pass
 		
-		
+	def updateMove(self):
+		pass
+
 class PlayerAvatar(Avatar):
 	def __init__(self):
 		self.randomWalkRadius = 10.0
