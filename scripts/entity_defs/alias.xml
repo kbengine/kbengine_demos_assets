@@ -48,6 +48,7 @@
 			</dbid>
 			<name>
 				<Type>	UNICODE	</Type>
+				<DatabaseLength> 32 </DatabaseLength>
 			</name>
 			<roleType>
 				<Type>	UINT8	</Type>
