@@ -69,6 +69,8 @@ class Combat(CombatPropertys):
 		if self.isDestroyed or self.isDead():
 			return
 		
+		self.addEnemy(attackerID, damage)
+
 		DEBUG_MSG("%s::recvDamage: %i attackerID=%i, skillID=%i, damageType=%i, damage=%i" % \
 			(self.getScriptName(), self.id, attackerID, skillID, damageType, damage))
 			
@@ -85,6 +87,9 @@ class Combat(CombatPropertys):
 		defined.
 		添加敌人
 		"""
+		if entityID in self.enemyLog:
+			return
+
 		DEBUG_MSG("%s::addEnemy: %i entity=%i, enmity=%i" % \
 						(self.getScriptName(), self.id, entityID, enmity))
 		
@@ -102,6 +107,9 @@ class Combat(CombatPropertys):
 		self.enemyLog.remove(entityID)
 		self.onRemoveEnemy(entityID)
 	
+		if len(self.enemyLog) == 0:
+			self.onEnemyEmpty()
+
 	def checkInTerritory(self):
 		"""
 		virtual method.
@@ -185,3 +193,11 @@ class Combat(CombatPropertys):
 		删除敌人
 		"""
 		pass
+
+	def onEnemyEmpty(self):
+		"""
+		virtual method.
+		敌人列表空了
+		"""
+		pass
+	
