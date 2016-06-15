@@ -113,22 +113,23 @@ class PlayerAvatar(Avatar):
 
 	def testAttackTarget(self):
 		if self.attackTargetID not in self.clientapp.entities:
-			
+
 			self.attackTargetID = 0
-			
+
 			# 从列表中随机找一个怪物攻击
 			for id, e in self.clientapp.entities.items():
 				if e.className == 'Monster':
 					self.attackTargetID = id
 					break
-			
+
 			# 找不到怪攻击就找人攻击
 			if self.attackTargetID == 0:
-				for id, e in self.clientapp.entities.items():
-					if e.className == 'Avatar' and id != self.id and not e.isState(GlobalDefine.ENTITY_STATE_DEAD):
-						self.attackTargetID = id
-						break
-					
+				if self.clientapp.getSpaceData("_mapping") == 'spaces/kbengine_unity3d_demo':
+					for id, e in self.clientapp.entities.items():
+						if e.className == 'Avatar' and id != self.id and not e.isState(GlobalDefine.ENTITY_STATE_DEAD):
+							self.attackTargetID = id
+							break
+
 			if self.attackTargetID == 0:
 				return
 
