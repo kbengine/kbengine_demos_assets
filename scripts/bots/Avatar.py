@@ -79,6 +79,14 @@ class PlayerAvatar(Avatar):
 		self.testType = random.randint(0, 2) # 测试类别， 0：随机移动， 1：找目标攻击， 2：测试传送
 		self.changeTestTypeTime = time.time()
 
+	def onBecomePlayer( self ):
+		"""
+		KBEngine method.
+		当这个entity被引擎定义为角色时被调用
+		"""
+		DEBUG_MSG("%s::onBecomePlayer: %i" % (self.__class__.__name__, self.id))
+		KBEngine.callback(1, self.update)
+
 	def onEnterSpace(self):
 		"""
 		KBEngine method.
@@ -91,7 +99,6 @@ class PlayerAvatar(Avatar):
 		self.__init__()
 		
 		self.spawnPosition = Math.Vector3( self.position )
-		KBEngine.callback(1, self.update)
 		
 	def onLeaveSpace(self):
 		"""
@@ -171,7 +178,7 @@ class PlayerAvatar(Avatar):
 			self.testType = random.randint(0, 2)
 				
 	def update(self):
-		#DEBUG_MSG("%s::update: %i" % (self.__class__.__name__, self.id))
+		DEBUG_MSG("%s::update: %i" % (self.__class__.__name__, self.id))
 		if self.isDestroyed:
 			return
 
