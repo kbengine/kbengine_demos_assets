@@ -122,7 +122,7 @@ class Combat(CombatPropertys):
 		virtual method.
 		检查敌人距离
 		"""
-		dist = entity.position.distTo(self.position) <= 30.0
+		dist = entity.position.distTo(self.position)
 		if dist > 30.0:
 			INFO_MSG("%s::checkEnemyDist: %i id=%i, dist=%f." % (self.getScriptName(), self.id, entity.id, dist))
 			return False
