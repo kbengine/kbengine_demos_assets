@@ -100,7 +100,21 @@ class Account(KBEngine.Proxy):
 				break
 		
 		self.client.onRemoveAvatar(found)
-					
+		
+	def reqRemoveAvatarDBID(self, dbid):
+		"""
+		exposed.
+		客户端请求删除一个角色
+		"""
+		DEBUG_MSG("Account[%i].reqRemoveAvatar: %s" % (self.id, dbid))
+		found = 0
+		
+		if dbid in self.characters:
+			del self.characters[dbid]
+			found = dbid
+
+		self.client.onRemoveAvatar(found)
+
 	def selectAvatarGame(self, dbid):
 		"""
 		exposed.

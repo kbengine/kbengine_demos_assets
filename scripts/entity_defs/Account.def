@@ -73,6 +73,11 @@
 			<Exposed/>
 			<Arg>	UNICODE	</Arg>	<!-- name --> 
 		</reqRemoveAvatar>
+
+		<reqRemoveAvatarDBID>
+			<Exposed/>
+			<Arg>	UNICODE	</Arg>	<!-- name --> 
+		</reqRemoveAvatarDBID>
 	</BaseMethods>
 
 	<CellMethods>
