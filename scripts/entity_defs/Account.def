@@ -76,7 +76,7 @@
 
 		<reqRemoveAvatarDBID>
 			<Exposed/>
-			<Arg>	UNICODE	</Arg>	<!-- name --> 
+			<Arg>	DBID		</Arg>	<!-- dbid --> 
 		</reqRemoveAvatarDBID>
 	</BaseMethods>
 
