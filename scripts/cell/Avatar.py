@@ -39,7 +39,7 @@ class Avatar(KBEngine.Entity,
 		# self.topSpeedY = 10.0
 		
 		# 如果为7说明在UE4地图中，那么为了配合demo的移动速度，我们将限制设置得更大一些
-		if self.spaceUType == 7
+		if self.spaceUType == 7:
 			self.topSpeed = 0
 
 	def isPlayer(self):
