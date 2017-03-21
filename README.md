@@ -1,14 +1,14 @@
-这是一个KBEngine服务端demos资产库
+ 这是一个KBEngine服务端demos资产库
 ========
 
-##开始
+## 开始
 
 请将kbengine_demos_assets整个文件夹放置于服务端引擎根目录中，通常是这样:
 
 ![demo_configure](http://www.kbengine.org/assets/img/screenshots/demo_copy_kbengine.jpg)
 
 
-##启动服务端
+## 启动服务端
 
 使用固定参数来启动：(参数的意义:http://www.kbengine.org/cn/docs/startup_shutdown.html)
 	
@@ -21,7 +21,7 @@
 		start_server.bat
 
 
-##关闭服务端
+## 关闭服务端
 
 快速杀死服务端进程:
 
