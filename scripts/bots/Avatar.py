@@ -85,6 +85,11 @@ class PlayerAvatar(Avatar):
 		当这个entity被引擎定义为角色时被调用
 		"""
 		DEBUG_MSG("%s::onBecomePlayer: %i" % (self.__class__.__name__, self.id))
+		
+		# 注意：由于PlayerAvatar是引擎底层强制由Avatar转换过来，__init__并不会再调用
+		# 这里手动进行初始化一下
+		self.__init__()
+		
 		KBEngine.callback(1, self.update)
 
 	def onEnterSpace(self):
@@ -131,7 +136,7 @@ class PlayerAvatar(Avatar):
 
 			# 找不到怪攻击就找人攻击
 			if self.attackTargetID == 0:
-				if self.clientapp.getSpaceData("_mapping") == 'spaces/kbengine_unity3d_demo':
+				if self.clientapp.getSpaceData("_mapping") == 'spaces/cell_sene':
 					for id, e in self.clientapp.entities.items():
 						if e.className == 'Avatar' and id != self.id and not e.isState(GlobalDefine.ENTITY_STATE_DEAD):
 							self.attackTargetID = id
@@ -155,7 +160,7 @@ class PlayerAvatar(Avatar):
 			
 			# 有概率的做传送测试, 只在u3ddemo中测试
 			if self.testTeleportPos == None and random.randint(0, 10) < 1:
-				if self.clientapp.getSpaceData("_mapping") == 'spaces/kbengine_unity3d_demo':
+				if self.clientapp.getSpaceData("_mapping") == 'spaces/cell_sene':
 					
 					if random.randint(0, 10) < 5:
 						# 本地传送
@@ -164,7 +169,7 @@ class PlayerAvatar(Avatar):
 						# 跨场景传送
 						self.testTeleportPos = (-34.340378, 1.5, -121.070831)
 
-				if self.clientapp.getSpaceData("_mapping") == 'spaces/teleportspace':
+				if self.clientapp.getSpaceData("_mapping") == 'spaces/duplicate':
 					self.testTeleportPos = (10, 1.5, 0)
 			
 			if self.testTeleportPos != None:
@@ -178,7 +183,7 @@ class PlayerAvatar(Avatar):
 			self.testType = random.randint(0, 2)
 				
 	def update(self):
-		DEBUG_MSG("%s::update: %i" % (self.__class__.__name__, self.id))
+		#DEBUG_MSG("%s::update: %i" % (self.__class__.__name__, self.id))
 		if self.isDestroyed:
 			return
 
@@ -187,7 +192,7 @@ class PlayerAvatar(Avatar):
 		# 如果自己已经死亡了，那么延时一下复活
 		if self.isState(GlobalDefine.ENTITY_STATE_DEAD):
 			if self.reliveTime == -1:
-					self.reliveTime = random.randint(1, 10)
+				self.reliveTime = random.randint(1, 10)
 			elif self.reliveTime > 0:
 				self.reliveTime -= 1
 			else:
