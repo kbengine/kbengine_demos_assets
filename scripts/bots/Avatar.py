@@ -78,6 +78,7 @@ class PlayerAvatar(Avatar):
 		self.attackTargetID = 0
 		self.testType = random.randint(0, 2) # 测试类别， 0：随机移动， 1：找目标攻击， 2：测试传送
 		self.changeTestTypeTime = time.time()
+		self.spawnPosition = Math.Vector3( self.position )
 
 	def onBecomePlayer( self ):
 		"""
@@ -102,8 +103,6 @@ class PlayerAvatar(Avatar):
 		# 注意：由于PlayerAvatar是引擎底层强制由Avatar转换过来，__init__并不会再调用
 		# 这里手动进行初始化一下
 		self.__init__()
-		
-		self.spawnPosition = Math.Vector3( self.position )
 		
 	def onLeaveSpace(self):
 		"""
