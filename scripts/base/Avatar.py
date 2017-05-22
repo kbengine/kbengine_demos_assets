@@ -37,6 +37,10 @@ class Avatar(KBEngine.Proxy,
 		INFO_MSG("Avatar[%i-%s] entities enable. spaceUTypeB=%s, mailbox:%s" % (self.id, self.nameB, self.spaceUTypeB, self.client))
 		Teleport.onEntitiesEnabled(self)
 		
+		if self._destroyTimer > 0:
+			self.delTimer(self._destroyTimer)
+			self._destroyTimer = 0
+
 	def onGetCell(self):
 		"""
 		KBEngine method.
@@ -96,7 +100,7 @@ class Avatar(KBEngine.Proxy,
 		DEBUG_MSG("Avatar[%i].onClientDeath:" % self.id)
 		# 防止正在请求创建cell的同时客户端断开了， 我们延时一段时间来执行销毁cell直到销毁base
 		# 这段时间内客户端短连接登录则会激活entity
-		self._destroyTimer = self.addTimer(1, 0, SCDefine.TIMER_TYPE_DESTROY)
+		self._destroyTimer = self.addTimer(10, 0, SCDefine.TIMER_TYPE_DESTROY)
 			
 	def onClientGetCell(self):
 		"""
