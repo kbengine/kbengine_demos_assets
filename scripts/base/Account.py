@@ -240,8 +240,10 @@ class Account(KBEngine.Proxy):
 			avatarinfo[2] = avatar.roleType
 			avatarinfo[3] = 1
 			self.writeToDB()
+		else:
+			avatarinfo[1] = "创建失败了"
 
-			avatar.destroy()
+		avatar.destroy()
 		
 		if self.client:
 			self.client.onCreateAvatarResult(0, avatarinfo)
