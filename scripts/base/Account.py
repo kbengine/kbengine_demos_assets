@@ -186,6 +186,23 @@ class Account(KBEngine.Proxy):
 		DEBUG_MSG("Account[%i].onClientDeath:" % self.id)
 		self.destroy()		
 		
+	def onDestroy(self):
+		"""
+		KBEngine method.
+		entity销毁
+		"""
+		DEBUG_MSG("Account::onDestroy: %i." % self.id)
+		
+		if self.activeAvatar:
+			self.activeAvatar.accountEntity = None
+
+			try:
+				self.activeAvatar.destroySelf()
+			except:
+				pass
+				
+			self.activeAvatar = None
+			
 	def __onAvatarCreated(self, baseRef, dbid, wasActive):
 		"""
 		选择角色进入游戏时被调用
