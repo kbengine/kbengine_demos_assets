@@ -74,7 +74,8 @@ class Avatar(KBEngine.Proxy,
 				DEBUG_MSG("Avatar[%i].destroySelf: relogin =%i" % (self.id, time.time() - self.accountEntity.relogin))
 				
 		# 销毁base
-		self.destroy()
+		if not self.isDestroyed:
+			self.destroy()
 
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
