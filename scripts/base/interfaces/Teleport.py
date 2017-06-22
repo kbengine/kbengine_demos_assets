@@ -37,7 +37,7 @@ class Teleport:
 		if hasattr(self, "cellData") and self.getClientType() != 6:
 			# 如果角色跳转到了同属某个demo的其他场景那么不强制回到出生的主场景
 			if self.cellData["spaceUType"] in GlobalConst.g_demoMaps.values():
-				spaceUType = GlobalConst.g_demoMaps.get(self.getClientDatas(), 1)
+				spaceUType = GlobalConst.g_demoMaps.get(self.getClientDatas()[0], 1)
 
 				if self.cellData["spaceUType"] != spaceUType:
 					spacedatas = d_spaces.datas[spaceUType]

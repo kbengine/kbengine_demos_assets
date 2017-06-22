@@ -59,7 +59,7 @@ class Account(KBEngine.Proxy):
 		CLIENT_TYPE_BOTS				= 6,	// bots
 		CLIENT_TYPE_MINI				= 7,	// 微型客户端
 		"""
-		spaceUType = GlobalConst.g_demoMaps.get(self.getClientDatas(), 1)
+		spaceUType = GlobalConst.g_demoMaps.get(self.getClientDatas()[0], 1)
 		
 		# 如果是机器人登陆，随机扔进一个场景
 		if self.getClientType() == 6:
