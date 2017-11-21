@@ -5,9 +5,9 @@
 		<pitch> 20 </pitch>
 	</Volatile>
 
-	<Implements>
+	<Interfaces>
 		<Interface>			GameObject		</Interface>
-	</Implements>
+	</Interfaces>
 
 	<Properties>
 		<spaceUType>

@@ -3,9 +3,9 @@
 		<position/>
 	</Volatile>
 
-	<Implements>
+	<Interfaces>
 		<Interface>	GameObject		</Interface>
-	</Implements>
+	</Interfaces>
 
 	<Properties>
 		<spawnEntityNO>

@@ -14,7 +14,7 @@
 		<optimized> true </optimized>
 	</Volatile>
 
-	<Implements>
+	<Interfaces>
 		<Interface>	GameObject		</Interface>
 		<Interface>	State			</Interface>
 		<Interface>	Flags			</Interface>
@@ -24,7 +24,7 @@
 		<Interface>	Spell			</Interface>
 		<Interface>	Teleport		</Interface>
 		<Interface>	Dialog			</Interface>
-	</Implements>
+	</Interfaces>
 
 	<Properties>
 		<roleType>

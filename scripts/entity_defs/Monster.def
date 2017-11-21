@@ -7,7 +7,7 @@
 		<!--<pitch> 20 </pitch>-->
 	</Volatile>
 
-	<Implements>
+	<Interfaces>
 		<Interface>			GameObject		</Interface>
 		<Interface>			State			</Interface>
 		<Interface>			Flags			</Interface>
@@ -16,7 +16,7 @@
 		<Interface>			Combat			</Interface>
 		<Interface>			Spell			</Interface>
 		<Interface>			AI			</Interface>
-	</Implements>
+	</Interfaces>
 
 	<Properties>
 	</Properties>
