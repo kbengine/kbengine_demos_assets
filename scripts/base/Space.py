@@ -19,7 +19,7 @@ class Space(KBEngine.Base, GameObject):
 	def __init__(self):
 		KBEngine.Base.__init__(self)
 		GameObject.__init__(self)
-		self.createInNewSpace(None)
+		self.createCellEntityInNewSpace(None)
 		
 		self.spaceUTypeB = self.cellData["spaceUType"]
 		
