@@ -87,13 +87,13 @@ class Space(KBEngine.Base, GameObject):
 									"modelScale"		: datas[3],		\
 									"createToCell"		: self.cell})
 				
-	def loginToSpace(self, avatarMailbox, context):
+	def loginToSpace(self, avatarEntityCall, context):
 		"""
 		defined method.
 		某个玩家请求登陆到这个space中
 		"""
-		avatarMailbox.createCell(self.cell)
-		self.onEnter(avatarMailbox)
+		avatarEntityCall.createCell(self.cell)
+		self.onEnter(avatarEntityCall)
 		
 	def logoutSpace(self, entityID):
 		"""
@@ -102,12 +102,12 @@ class Space(KBEngine.Base, GameObject):
 		"""
 		self.onLeave(entityID)
 		
-	def teleportSpace(self, entityMailbox, position, direction, context):
+	def teleportSpace(self, entityCall, position, direction, context):
 		"""
 		defined method.
 		请求进入某个space中
 		"""
-		entityMailbox.cell.onTeleportSpaceCB(self.cell, self.spaceUTypeB, position, direction)
+		entityCall.cell.onTeleportSpaceCB(self.cell, self.spaceUTypeB, position, direction)
 
 	def onTimer(self, tid, userArg):
 		"""
@@ -120,15 +120,15 @@ class Space(KBEngine.Base, GameObject):
 		
 		GameObject.onTimer(self, tid, userArg)
 		
-	def onEnter(self, entityMailbox):
+	def onEnter(self, entityCall):
 		"""
 		defined method.
 		进入场景
 		"""
-		self.avatars[entityMailbox.id] = entityMailbox
+		self.avatars[entityCall.id] = entityCall
 		
 		if self.cell is not None:
-			self.cell.onEnter(entityMailbox)
+			self.cell.onEnter(entityCall)
 		
 	def onLeave(self, entityID):
 		"""

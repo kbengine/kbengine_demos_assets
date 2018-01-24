@@ -2,27 +2,27 @@
 	<Properties>
 		<characters>
 			<Type>			AVATAR_INFOS_LIST		</Type>
-			<Flags>			BASE				</Flags>
-			<Default>						</Default>
+			<Flags>			BASE					</Flags>
+			<Default>								</Default>
 			<Persistent>		true				</Persistent>
 		</characters>
 
 		<lastSelCharacter>
-			<Type>			DBID				</Type>
+			<Type>			DBID					</Type>
 			<Flags>			BASE_AND_CLIENT			</Flags>
-			<Default>		0				</Default>
+			<Default>		0						</Default>
 			<Persistent>		true				</Persistent>
 		</lastSelCharacter>
 		
 		<activeCharacter>
-			<Type>			MAILBOX				</Type>
-			<Flags>			BASE				</Flags>
+			<Type>			ENTITYCALL				</Type>
+			<Flags>			BASE					</Flags>
 		</activeCharacter>
 		
 		<lastClientIpAddr>
-			<Type>			UINT32				</Type>
-			<Flags>			BASE				</Flags>
-			<Default>		0				</Default>
+			<Type>			UINT32					</Type>
+			<Flags>			BASE					</Flags>
+			<Default>		0						</Default>
 		</lastClientIpAddr>
 	</Properties>
 

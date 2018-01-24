@@ -20,7 +20,7 @@ class Spaces(KBEngine.Base, GameObject):
 		# 初始化空间分配器
 		self.initAlloc()
 		
-		# 向全局共享数据中注册这个管理器的mailbox以便在所有逻辑进程中可以方便的访问
+		# 向全局共享数据中注册这个管理器的entityCall以便在所有逻辑进程中可以方便的访问
 		KBEngine.globalData["Spaces"] = self
 	
 	def initAlloc(self):
@@ -68,12 +68,12 @@ class Spaces(KBEngine.Base, GameObject):
 			if space:
 				space.logoutSpace(avatarID)
 				
-	def teleportSpace(self, entityMailbox, spaceUType, position, direction, context):
+	def teleportSpace(self, entityCall, spaceUType, position, direction, context):
 		"""
 		defined method.
 		请求进入某个space中
 		"""
-		self._spaceAllocs[spaceUType].teleportSpace(entityMailbox, position, direction, context)
+		self._spaceAllocs[spaceUType].teleportSpace(entityCall, position, direction, context)
 
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
@@ -96,10 +96,10 @@ class Spaces(KBEngine.Base, GameObject):
 		"""
 		self._spaceAllocs[spaceUType].onSpaceLoseCell(spaceKey)
 		
-	def onSpaceGetCell(self, spaceUType, spaceMailbox, spaceKey):
+	def onSpaceGetCell(self, spaceUType, spaceEntityCall, spaceKey):
 		"""
 		defined method.
 		space的cell创建好了
 		"""
-		self._spaceAllocs[spaceUType].onSpaceGetCell(spaceMailbox, spaceKey)
+		self._spaceAllocs[spaceUType].onSpaceGetCell(spaceEntityCall, spaceKey)
 
