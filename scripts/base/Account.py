@@ -167,7 +167,9 @@ class Account(KBEngine.Proxy):
 		# 那么会踢掉之前的客户端连接
 		# 那么此时self.activeAvatar可能不为None， 常规的流程是销毁这个角色等新客户端上来重新选择角色进入
 		if self.activeAvatar:
-			self.activeAvatar.giveClientTo(self)
+			if self.activeAvatar.client is not None:
+				self.activeAvatar.giveClientTo(self)
+
 			self.relogin = time.time()
 			self.activeAvatar.destroySelf()
 			self.activeAvatar = None
