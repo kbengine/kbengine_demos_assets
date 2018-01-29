@@ -11,13 +11,13 @@ import d_spaces
 import d_spaces_spawns
 import xml.etree.ElementTree as etree 
 
-class Space(KBEngine.Base, GameObject):
+class Space(KBEngine.Entity, GameObject):
 	"""
 	一个可操控cellapp上真正space的实体
 	注意：它是一个实体，并不是真正的space，真正的space存在于cellapp的内存中，通过这个实体与之关联并操控space。
 	"""
 	def __init__(self):
-		KBEngine.Base.__init__(self)
+		KBEngine.Entity.__init__(self)
 		GameObject.__init__(self)
 		self.createCellEntityInNewSpace(None)
 		
@@ -80,7 +80,7 @@ class Space(KBEngine.Base, GameObject):
 		if datas is None:
 			ERROR_MSG("Space::onTimer: spawn %i is error!" % datas[0])
 
-		KBEngine.createBaseAnywhere("SpawnPoint", 
+		KBEngine.createEntityAnywhere("SpawnPoint", 
 									{"spawnEntityNO"	: datas[0], 	\
 									"position"			: datas[1], 	\
 									"direction"			: datas[2],		\

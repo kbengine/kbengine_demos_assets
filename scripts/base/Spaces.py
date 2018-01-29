@@ -8,13 +8,13 @@ from KBEDebug import *
 from SpaceAlloc import *
 from interfaces.GameObject import GameObject
 
-class Spaces(KBEngine.Base, GameObject):
+class Spaces(KBEngine.Entity, GameObject):
 	"""
 	这是一个脚本层封装的空间管理器
 	KBEngine的space是一个抽象空间的概念，一个空间可以被脚本层视为游戏场景、游戏房间、甚至是一个宇宙。
 	"""
 	def __init__(self):
-		KBEngine.Base.__init__(self)
+		KBEngine.Entity.__init__(self)
 		GameObject.__init__(self)
 		
 		# 初始化空间分配器

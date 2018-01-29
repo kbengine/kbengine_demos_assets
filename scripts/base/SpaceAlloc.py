@@ -35,7 +35,7 @@ class SpaceAlloc:
 			
 		context = copy.copy(context)
 		spaceData = d_spaces.datas.get(self._utype)
-		KBEngine.createBaseAnywhere(spaceData["entityType"], \
+		KBEngine.createEntityAnywhere(spaceData["entityType"], \
 											{"spaceUType" : self._utype,	\
 											"spaceKey" : spaceKey,	\
 											"context" : context,	\
