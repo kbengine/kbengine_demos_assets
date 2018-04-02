@@ -35,48 +35,48 @@
 				自身规则所生成的协议ID, 这个ID必须所有def文件中唯一
 				这里只是一个演示，demo客户端并没有用到
 			-->
-			<Utype> 10003 </Utype> 
-			<Arg>	AVATAR_INFOS_LIST	</Arg>
+			<Utype>			10003				</Utype> 
+			<Arg>			AVATAR_INFOS_LIST	</Arg>
 		</onReqAvatarList>
 
 		<onCreateAvatarResult>
-			<Utype> 10005		</Utype>
-			<Arg>	UINT8 		</Arg>
-			<Arg>	AVATAR_INFOS 	</Arg>
+			<Utype>			10005				</Utype>
+			<Arg>			UINT8 				</Arg>
+			<Arg>			AVATAR_INFOS 		</Arg>
 		</onCreateAvatarResult>
 
 		<onRemoveAvatar>
-			<Arg>	DBID		</Arg>
+			<Arg>			DBID				</Arg>
 		</onRemoveAvatar>
 	</ClientMethods>
 
 	<BaseMethods>
 		<reqAvatarList>
 			<Exposed/>
-			<Utype> 10001 </Utype>
+			<Utype>			10001 				</Utype>
 		</reqAvatarList>
 
 		<reqCreateAvatar>
 			<Exposed/>
-			<Utype> 10002 </Utype>
-			<Arg>	UINT8	</Arg>	<!-- roleType -->
-			<Arg>	UNICODE	</Arg>	<!-- name -->
+			<Utype>			10002				</Utype>
+			<Arg>			UINT8				</Arg>	<!-- roleType -->
+			<Arg>			UNICODE				</Arg>	<!-- name -->
 		</reqCreateAvatar>
 
 		<selectAvatarGame>
 			<Exposed/>
-			<Utype> 10004 </Utype>
-			<Arg>	DBID	</Arg>	<!-- dbid -->
+			<Utype>			10004				</Utype>
+			<Arg>			DBID				</Arg>	<!-- dbid -->
 		</selectAvatarGame>
 
 		<reqRemoveAvatar>
 			<Exposed/>
-			<Arg>	UNICODE	</Arg>	<!-- name --> 
+			<Arg>			UNICODE				</Arg>	<!-- name --> 
 		</reqRemoveAvatar>
 
 		<reqRemoveAvatarDBID>
 			<Exposed/>
-			<Arg>	DBID		</Arg>	<!-- dbid --> 
+			<Arg>			DBID				</Arg>	<!-- dbid --> 
 		</reqRemoveAvatarDBID>
 	</BaseMethods>
 

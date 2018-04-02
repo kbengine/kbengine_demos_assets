@@ -6,7 +6,7 @@
 	</Volatile>
 
 	<Interfaces>
-		<Interface>		GameObject		</Interface>
+		<Interface>			GameObject		</Interface>
 	</Interfaces>
 
 	<Properties>

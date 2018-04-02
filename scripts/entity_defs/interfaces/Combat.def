@@ -7,7 +7,7 @@
 		<enemyLog>
 			<Type>			ENTITYID_LIST		</Type>
 			<Flags>			CELL_PRIVATE		</Flags>
-			<Default>		0			</Default>
+			<Default>		0					</Default>
 		</enemyLog>
 	</Properties>
 
@@ -16,7 +16,7 @@
 			<Arg>	ENTITY_ID									</Arg>
 			<Arg>	SKILLID										</Arg>
 			<Arg>	DAMAGE_TYPE									</Arg>
-			<Arg>	HP										</Arg>
+			<Arg>	HP											</Arg>
 		</recvDamage>
 
 		<addEnemy>
@@ -30,7 +30,7 @@
 			<Arg>	ENTITY_ID									</Arg>
 			<Arg>	SKILLID										</Arg>
 			<Arg>	DAMAGE_TYPE									</Arg>
-			<Arg>	HP										</Arg>
+			<Arg>	HP											</Arg>
 		</recvDamage>
 	</ClientMethods>
 </root>

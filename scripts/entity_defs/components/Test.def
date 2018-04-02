@@ -1,0 +1,58 @@
+<root>
+	<Properties>
+		<state>
+			<Type>			INT32						</Type>
+			<Flags>			ALL_CLIENTS					</Flags>
+			<Default>		100							</Default>
+			<Persistent>	true						</Persistent> 
+		</state>
+
+		<own>
+			<Type>			INT32						</Type>
+			<Flags>			CELL_PUBLIC_AND_OWN			</Flags>
+			<Persistent>	true						</Persistent> 
+			<Default>		1001						</Default>
+		</own>
+
+		<bb>
+			<Type>			INT32						</Type>
+			<Flags>			BASE						</Flags>
+			<Persistent>	true						</Persistent> 
+			<Default>		12							</Default>
+		</bb>
+
+		<cc>
+			<Type>			INT32						</Type>
+			<Flags>			CELL_PUBLIC					</Flags>
+			<Default>		1002						</Default>
+		</cc>
+	</Properties>
+
+	<CellEvents>
+		<hello>
+			<Exposed/>
+			<Arg>			INT32						</Arg>
+		</hello>
+	</CellEvents>
+	
+	<CellMethods>
+		<hello>
+			<Exposed/> 
+			<Arg>			INT32						</Arg>
+		</hello>
+	</CellMethods>
+
+	<BaseMethods>
+		<say>
+			<Exposed/>
+			<Arg>			INT32						</Arg>
+		</say>
+	</BaseMethods>
+
+	<ClientMethods>
+		<helloCB>
+			<Arg>			INT32						</Arg>
+		</helloCB>
+	</ClientMethods>
+</root>
+

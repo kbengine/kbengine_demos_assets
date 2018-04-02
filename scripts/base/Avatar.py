@@ -107,7 +107,8 @@ class Avatar(KBEngine.Proxy,
 		客户端已经获得了cell部分实体的相关数据
 		"""
 		INFO_MSG("Avatar[%i].onClientGetCell:%s" % (self.id, self.client))
-		
+		self.client.component3.helloCB(777)
+
 	def onDestroyTimer(self):
 		DEBUG_MSG("Avatar::onDestroyTimer: %i" % (self.id))
 		self.destroySelf()

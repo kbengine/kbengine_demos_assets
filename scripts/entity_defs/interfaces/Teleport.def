@@ -1,7 +1,7 @@
 <root>
 	<Properties>
 		<spaceUType>
-			<Utype> 		41001					</Utype>
+			<Utype>			41001					</Utype>
 			<Type>			UINT32					</Type>
 			<Flags>			CELL_PUBLIC_AND_OWN		</Flags>
 			<Persistent>	true					</Persistent>

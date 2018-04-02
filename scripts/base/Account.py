@@ -77,7 +77,10 @@ class Account(KBEngine.Proxy):
 			"level"				: 1,
 			"spaceUType"		: spaceUType,
 			"direction"			: (0, 0, d_avatar_inittab.datas[roleType]["spawnYaw"]),
-			"position"			: spaceData.get("spawnPos", (0,0,0))
+			"position"			: spaceData.get("spawnPos", (0,0,0)),
+
+			"component1"		: { "bb" : 1231, "state" : 456},
+			"component3"		: { "state" : 888 },
 			}
 			
 		avatar = KBEngine.createEntityLocally('Avatar', props)
