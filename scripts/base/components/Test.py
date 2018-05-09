@@ -30,7 +30,7 @@ class Test(KBEngine.EntityComponent):
 		cell部分。
 		"""
 		INFO_MSG("Test[%i]::onClientEnabled:entities enable." % (self.ownerID))
-		self.tid = self.addTimer(1, 1, 123)
+		self.tid = self.addTimer(10, 0, 123)
 
 	def onClientDeath(self):
 		"""
