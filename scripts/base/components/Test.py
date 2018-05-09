@@ -38,7 +38,9 @@ class Test(KBEngine.EntityComponent):
 		客户端对应实体已经销毁
 		"""
 		DEBUG_MSG("Test[%i].onClientDeath:" % self.ownerID)
-		self.delTimer(self.tid)
+
+		if self.tid > 0:
+			self.delTimer(self.tid)
 
 	def onTimer(self, tid, userArg):
 		"""
@@ -46,3 +48,6 @@ class Test(KBEngine.EntityComponent):
 		引擎回调timer触发
 		"""
 		DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.name, self.ownerID, tid, userArg))
+
+		if self.tid == tid:
+			self.tid = 0
