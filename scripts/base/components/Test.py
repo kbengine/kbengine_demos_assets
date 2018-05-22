@@ -6,7 +6,9 @@ class Test(KBEngine.EntityComponent):
 	def __init__(self):
 		KBEngine.EntityComponent.__init__(self)
 		print("+++++++++++++++++++++++name=%s, bb=%i" % (self.name, self.bb))
-		print("+++++++++++++++++++++++cellData=%s" % self.owner.cellData[self.name])
+
+		if hasattr(self.owner, "cellData"):
+			print("+++++++++++++++++++++++cellData=%s" % self.owner.cellData[self.name])
 
 	def onAttached(self, owner):
 		"""
