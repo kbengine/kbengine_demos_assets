@@ -88,7 +88,7 @@ class SpaceAlloc:
 		spaceKey = context.get("spaceKey", 0)
 		space = self.alloc({"spaceKey" : spaceKey})
 		if space is None:
-			ERROR_MSG("Spaces::loginToSpace: not found space %i. login to space is failed! spaces=%s" % (self._utype, self._spaces))
+			ERROR_MSG("Spaces::loginToSpace: not found space %i. login to space is failed! spaces=%s" % (self._utype, str(self._spaces)))
 			return
 		
 		if space == CONST_WAIT_CREATE:
