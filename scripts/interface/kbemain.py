@@ -49,6 +49,9 @@ def onTick(timerID):
 	"""
 	INFO_MSG('onTick()')
 
+	# 测试数据库查询
+	KBEngine.executeRawDatabaseCommand("select * from kbe_accountinfos limit 3;", onSqlCallback)
+
 def onInterfaceAppShutDown():
 	"""
 	KBEngine method.
@@ -136,4 +139,8 @@ def onRequestCharge(ordersID, entityDBID, datas):
 	# tornado异步访问。也可以结合socket模拟http的方式与平台交互。
 	
 	KBEngine.chargeResponse(ordersID, datas, KBEngine.SERVER_SUCCESS)
+
+
+def onSqlCallback(result, rows, insertid, error):
+	DEBUG_MSG('onSqlCallback: result=%s, rows=%s, insertid=%s, error=%s' % (str(result), str(rows), str(insertid), str(error)))
 
