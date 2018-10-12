@@ -51,6 +51,7 @@ def onTick(timerID):
 
 	# 测试数据库查询
 	KBEngine.executeRawDatabaseCommand("select * from kbe_accountinfos limit 3;", onSqlCallback)
+	KBEngine.urlopen("https://www.baidu.com", onHttpCallback)
 
 def onInterfaceAppShutDown():
 	"""
@@ -144,3 +145,5 @@ def onRequestCharge(ordersID, entityDBID, datas):
 def onSqlCallback(result, rows, insertid, error):
 	DEBUG_MSG('onSqlCallback: result=%s, rows=%s, insertid=%s, error=%s' % (str(result), str(rows), str(insertid), str(error)))
 
+def onHttpCallback(httpcode, data, headers, success, url):
+	DEBUG_MSG('onHttpCallback: httpcode=%i, data=%s, headers=%s, success=%s, url=%s' % (httpcode, data, headers, str(success), url))
