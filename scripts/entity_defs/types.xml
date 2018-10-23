@@ -29,7 +29,7 @@
 	<ENTITYID_LIST> ARRAY <of> ENTITY_ID </of>	</ENTITYID_LIST>
 	
 	<AVATAR_DATA>	FIXED_DICT
-		<implementedBy>AVATAR_DATA.inst</implementedBy>
+		<implementedBy>AVATAR_DATA.AVATAR_DATA_PICKLER</implementedBy>
 		<Properties>
 			<param1>
 				<Type>	INT8	</Type>
@@ -63,7 +63,7 @@
 	</AVATAR_INFOS>	
 	
 	<AVATAR_INFOS_LIST>	FIXED_DICT
-		<implementedBy>AVATAR_INFOS.avatar_info_list_inst</implementedBy>
+		<implementedBy>AVATAR_INFOS.AVATAR_INFOS_LIST_PICKLER</implementedBy>
 		<Properties>
 			<values>
 				<Type>	ARRAY <of> AVATAR_INFOS </of>	</Type>
