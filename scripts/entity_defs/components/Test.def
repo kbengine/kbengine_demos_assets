@@ -1,4 +1,6 @@
 <root>
+	<!-- <Parent>	TestBase	</Parent> -->
+
 	<Properties>
 		<state>
 			<Type>			INT32						</Type>
