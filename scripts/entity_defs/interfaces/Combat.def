@@ -7,7 +7,7 @@
 		<enemyLog>
 			<Type>			ENTITYID_LIST		</Type>
 			<Flags>			CELL_PRIVATE		</Flags>
-			<Default>		0			</Default>
+			<Default>		[]			</Default>
 		</enemyLog>
 	</Properties>
 
