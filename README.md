@@ -25,7 +25,7 @@
 
 快速杀死服务端进程:
 
-	首先进入对应的资产库kbengine/kbengine_demos_assets目录中，然后在命令行执行如下命令：
+	首先进入对应的资产库kbengine/kbengine_demos_assets目录中，然后在命令行执行如下命令： 
 
 	Linux:
 		kill_server.sh
