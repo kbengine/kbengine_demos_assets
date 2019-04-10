@@ -16,7 +16,7 @@
 		</HP_Max>
 
 		<MP>
-			<Type>			HP				</Type>
+			<Type>			MP				</Type>
 			<Utype>			47003				</Utype>
 			<Flags>			ALL_CLIENTS			</Flags>
 			<Persistent>	true					</Persistent> 
@@ -24,7 +24,7 @@
 		</MP>
 
 		<MP_Max>
-			<Type>			HP				</Type>
+			<Type>			MP				</Type>
 			<Utype>			47004				</Utype>
 			<Flags>			ALL_CLIENTS			</Flags>
 			<Default>		0				</Default>
