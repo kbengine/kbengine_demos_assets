@@ -44,10 +44,12 @@
 
 ## 在代码中定义实体的方法和属性
 
-	# 首先需要导入EntityDef引擎的实体定义模块
+首先需要导入EntityDef引擎的实体定义模块
+
 	import EntityDef as Def
 
-	# 使用@Def.entity定义实体，hasClient告诉引擎，该实体包含客户端部分，如果不填写改选项默认为False。
+使用@Def.entity定义实体，hasClient告诉引擎，该实体包含客户端部分，如果不填写改选项默认为False。
+
 	@Def.entity(hasClient=True)
 	class Monster(KBEngine.Entity):
 		def __init__(self):
@@ -87,6 +89,7 @@
 	# persistent=True描述该组件是否参与持久化。注意：仅仅持久化组件内部属性定义为persistent=True的属性数据。
 	# “-> Test” Test是demo中的组件脚本，参考base/Avatar.py中定义的用法。
 	# 组件以实体属性的形式存在，component1为组件属性名称，可以通过self.component1来访问。
+	# 注意：组件的挂在是全局的，在base、或者cell脚本上挂在组件，如果组件本身存在其他进程的部分则会自动创建该组件属性。
 	@Def.component(persistent=True)
 	def component1(self) -> Test:
 		return None
@@ -99,6 +102,7 @@
 
 	1: 简单注册一个类型， IDE可能无法自动提示
 		Def.rename(OBJECT_ID=Def.INT32) 
+
 	2: 使用装饰器注册，IDE可以自动提示OBJECT_ID
 		@Def.rename()
 		def OBJECT_ID() -> Def.INT32: pass
