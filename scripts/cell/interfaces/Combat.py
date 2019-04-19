@@ -3,14 +3,21 @@ import KBEngine
 import GlobalDefine
 from KBEDebug import * 
 from interfaces.CombatPropertys import CombatPropertys
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class Combat(CombatPropertys):
 	"""
 	关于战斗的一些功能
 	"""
 	def __init__(self):
 		CombatPropertys.__init__(self)
-		
+	
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def enemyLog(self) -> Types.ENTITYID_LIST:
+		return []
+
 	def canUpgrade(self):
 		"""
 		virtual method.
@@ -61,8 +68,16 @@ class Combat(CombatPropertys):
 		是否可死亡
 		"""
 		return True
-		
-	def recvDamage(self, attackerID, skillID, damageType, damage):
+	
+	@Def.clientmethod()
+	def recvDamage(self, attackerID : Types.ENTITY_ID, skillID : Types.SKILLID, damageType : Types.DAMAGE_TYPE, damage : Types.HP):
+		"""
+		defined.
+		"""
+		pass
+
+	@Def.method()
+	def recvDamage(self, attackerID : Types.ENTITY_ID, skillID : Types.SKILLID, damageType : Types.DAMAGE_TYPE, damage : Types.HP):
 		"""
 		defined.
 		"""
@@ -81,8 +96,9 @@ class Combat(CombatPropertys):
 			self.setHP(self.HP - damage)
 		
 		self.allClients.recvDamage(attackerID, skillID, damageType, damage)
-		
-	def addEnemy(self, entityID, enmity):
+	
+	@Def.method()
+	def addEnemy(self, entityID : Types.ENTITY_ID, enmity : Types.ENMITY):
 		"""
 		defined.
 		添加敌人

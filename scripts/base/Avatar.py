@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*-
 import KBEngine
 import random
-import SCDefine
+import GlobalDefine
 import time
 import GlobalConst
 import d_spaces
 import d_avatar_inittab
+
 from KBEDebug import *
 from interfaces.GameObject import GameObject
 from interfaces.Teleport import Teleport
+from components.Test import Test
 
+import EntityDef as Def
+import Types
+
+# 定义一个entity
+# hasClient告诉引擎，该实体包含客户端部分
+@Def.entity(hasClient=True)
 class Avatar(KBEngine.Proxy,
 			GameObject,
 			Teleport):
@@ -47,8 +55,21 @@ class Avatar(KBEngine.Proxy,
 		entity的cell部分实体被创建成功
 		"""
 		DEBUG_MSG('Avatar::onGetCell: %s' % self.cell)
-		
-	def createCell(self, space):
+	
+	@Def.property(flags=Def.BASE, persistent=True)
+	def roleType(self) -> Def.UINT8:
+		return None
+
+	@Def.component(persistent=True)
+	def component1(self) -> Test:
+		return None
+
+	@Def.component(persistent=False)
+	def component2(self) -> Test:
+		return None
+
+	@Def.method()
+	def createCell(self, space : Def.ENTITYCALL):
 		"""
 		defined method.
 		创建cell实体
@@ -86,7 +107,7 @@ class Avatar(KBEngine.Proxy,
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_DESTROY == userArg:
+		if GlobalDefine.TIMER_TYPE_DESTROY == userArg:
 			self.onDestroyTimer()
 		
 		GameObject.onTimer(self, tid, userArg)
@@ -99,7 +120,7 @@ class Avatar(KBEngine.Proxy,
 		DEBUG_MSG("Avatar[%i].onClientDeath:" % self.id)
 		# 防止正在请求创建cell的同时客户端断开了， 我们延时一段时间来执行销毁cell直到销毁base
 		# 这段时间内客户端短连接登录则会激活entity
-		self._destroyTimer = self.addTimer(10, 0, SCDefine.TIMER_TYPE_DESTROY)
+		self._destroyTimer = self.addTimer(10, 0, GlobalDefine.TIMER_TYPE_DESTROY)
 			
 	def onClientGetCell(self):
 		"""

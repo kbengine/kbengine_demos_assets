@@ -5,7 +5,9 @@ from KBEDebug import *
 from Space import Space
 import d_entities
 import d_spaces
+import EntityDef as Def
 
+@Def.entity()
 class SpaceDuplicate(Space):
 	"""
 	这是一个空间的副本实体

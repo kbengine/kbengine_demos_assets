@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import KBEngine
 from KBEDebug import *
+import EntityDef as Def
 
+@Def.interface()
 class GameObject:
 	"""
 	服务端游戏对象的基础接口类
@@ -29,6 +31,10 @@ class GameObject:
 		获取场景管理器
 		"""
 		return KBEngine.globalData["Spaces"]
+
+	@Def.property(flags=Def.BASE, persistent=True)
+	def persistentMapping(self) -> Def.PY_DICT:
+		return {}
 
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks

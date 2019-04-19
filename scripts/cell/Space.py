@@ -2,9 +2,12 @@
 import KBEngine
 from KBEDebug import *
 from interfaces.GameObject import GameObject
+import EntityDef as Def
+import Types
 
 import d_spaces
 
+@Def.entity()
 class Space(KBEngine.Entity, GameObject):
 	"""
 	游戏场景，在这里代表野外大地图
@@ -23,6 +26,10 @@ class Space(KBEngine.Entity, GameObject):
 		
 		KBEngine.globalData["space_%i" % self.spaceID] = self.base
 	
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def spaceUType(self) -> Def.UINT32:
+		return None
+
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
 	#--------------------------------------------------------------------------------------------
@@ -32,15 +39,17 @@ class Space(KBEngine.Entity, GameObject):
 		"""
 		del KBEngine.globalData["space_%i" % self.spaceID]
 		self.destroySpace()
-		
-	def onEnter(self, entityCall):
+	
+	@Def.method()
+	def onEnter(self, entityCall : Def.ENTITYCALL):
 		"""
 		defined method.
 		进入场景
 		"""
 		DEBUG_MSG('Space::onEnter space[%d] entityID = %i.' % (self.spaceUType, entityCall.id))
-		
-	def onLeave(self, entityID):
+	
+	@Def.method()
+	def onLeave(self, entityID : Types.ENTITY_ID):
 		"""
 		defined method.
 		离开场景

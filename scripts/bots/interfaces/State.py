@@ -25,7 +25,7 @@ class State:
 
 	def isForbid(self, forbid):
 		"""
-		scdefine.FORBID_***
+		GlobalDefine.FORBID_***
 		"""
 		return self.forbids & forbid
 

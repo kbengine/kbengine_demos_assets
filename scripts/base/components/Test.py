@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import KBEngine
 from KBEDebug import *
+import EntityDef as Def
 
+# hasClient选项可以强制指定客户端也包含该实体的部分，如果不指定引擎根据是否有客户端方法或者属性来决定
+@Def.component(hasClient=True)
 class Test(KBEngine.EntityComponent):
 	def __init__(self):
 		KBEngine.EntityComponent.__init__(self)
@@ -10,6 +13,10 @@ class Test(KBEngine.EntityComponent):
 		if hasattr(self.owner, "cellData"):
 			print("+++++++++++++++++++++++cellData=%s" % self.owner.cellData[self.name])
 
+	@Def.property(flags=Def.BASE, persistent=True)
+	def bb(self) -> Def.INT32:
+		return 12
+		
 	def onAttached(self, owner):
 		"""
 		"""
@@ -20,7 +27,8 @@ class Test(KBEngine.EntityComponent):
 		"""
 		INFO_MSG("Test::onDetached(): owner=%i" % (owner.id))
 
-	def say(self, iii):
+	@Def.method(exposed=True)
+	def say(self, iii : Def.INT32):
 		print("+++++++++++++++++++++++say", iii)
 		if self.owner.cell is not None:
 			self.cell.hello(33321)

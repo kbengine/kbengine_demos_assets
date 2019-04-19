@@ -2,13 +2,16 @@
 import KBEngine
 import skills
 import GlobalConst
-import SCDefine
+import GlobalDefine
 from KBEDebug import * 
 import skillbases.SCObject as SCObject
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class Spell:
 	def __init__(self):
-		#self.addTimer(1,1,SCDefine.TIMER_TYPE_BUFF_TICK)
+		#self.addTimer(1,1,GlobalDefine.TIMER_TYPE_BUFF_TICK)
 		pass
 		
 	def addDBuff(self, buffData):
@@ -30,8 +33,9 @@ class Spell:
 		吟唱技能
 		"""
 		pass
-		
-	def spellTarget(self, skillID, targetID):
+	
+	@Def.method()
+	def spellTarget(self, skillID : Types.SKILLID, targetID : Types.ENTITY_ID):
 		"""
 		defined.
 		对一个目标entity施放一个技能
@@ -68,7 +72,7 @@ class Spell:
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_BUFF_TICK == userArg:
+		if GlobalDefine.TIMER_TYPE_BUFF_TICK == userArg:
 			self.onBuffTick()
 
 	def onBuffTick(self):

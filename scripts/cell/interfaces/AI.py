@@ -1,20 +1,34 @@
 # -*- coding: utf-8 -*-
 import KBEngine
-import SCDefine
+import GlobalDefine
 import time
 import random
-import GlobalDefine
 from KBEDebug import * 
 from skillbases.SCObject import SCObject
+import EntityDef as Def
+import Types
 
 import d_entities
 
 __TERRITORY_AREA__ = 30.0
 
+@Def.interface()
 class AI:
 	def __init__(self):
 		self.enable()
 	
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def targetID(self) -> Types.ENTITY_ID:
+		return 0
+
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def heartBeatTimerID(self) -> Def.UINT32:
+		return 0
+		
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def territoryControllerID(self) -> Def.UINT32:
+		return 0
+
 	def initEntity(self):
 		"""
 		virtual method.
@@ -60,7 +74,7 @@ class AI:
 		激活entity
 		"""
 		self.heartBeatTimerID = \
-		self.addTimer(random.randint(0, 1), 1, SCDefine.TIMER_TYPE_HEARDBEAT)				# 心跳timer, 每1秒一次
+		self.addTimer(random.randint(0, 1), 1, GlobalDefine.TIMER_TYPE_HEARDBEAT)				# 心跳timer, 每1秒一次
 		
 	def disable(self):
 		"""
@@ -296,5 +310,5 @@ class AI:
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_HEARDBEAT == userArg:
+		if GlobalDefine.TIMER_TYPE_HEARDBEAT == userArg:
 			self.onHeardTimer()

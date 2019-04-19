@@ -5,7 +5,10 @@ import Math
 import time
 import random
 from KBEDebug import * 
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class Motion:
 	"""
 	移动相关的封装
@@ -13,6 +16,18 @@ class Motion:
 	def __init__(self):
 		self.nextMoveTime = int(time.time() + random.randint(5, 15))
 	
+	@Def.property(flags=Def.ALL_CLIENTS)
+	def moveSpeed(self) -> Def.UINT8:
+		return 50
+
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def isMoving(self) -> Types.BOOL:
+		return 0
+
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def nextMoveTime(self) -> Def.UINT32:
+		return 0
+
 	def stopMotion(self):
 		"""
 		停止移动

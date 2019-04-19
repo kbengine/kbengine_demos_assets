@@ -2,7 +2,10 @@
 import KBEngine
 import GlobalDefine
 from KBEDebug import * 
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class CombatPropertys:
 	"""
 	所有关于战斗的属性
@@ -16,13 +19,30 @@ class CombatPropertys:
 		if not self.isState(GlobalDefine.ENTITY_STATE_DEAD) and self.HP == 0 and self.MP == 0:
 			self.fullPower()
 	
+	@Def.property(flags=Def.ALL_CLIENTS, utype=47001, persistent=True)
+	def HP(self) -> Types.HP:
+		return 0
+
+	@Def.property(flags=Def.ALL_CLIENTS, utype=47002, persistent=True)
+	def HP_Max(self) -> Types.HP:
+		return 0
+
+	@Def.property(flags=Def.ALL_CLIENTS, utype=47003, persistent=True)
+	def MP(self) -> Types.MP:
+		return 0
+
+	@Def.property(flags=Def.ALL_CLIENTS, utype=47004, persistent=True)
+	def MP_Max(self) -> Types.MP:
+		return 0
+
 	def fullPower(self):
 		"""
 		"""
 		self.setHP(self.HP_Max)
 		self.setMP(self.MP_Max)
 		
-	def addHP(self, val):
+	@Def.method()
+	def addHP(self, val : Types.HP):
 		"""
 		defined.
 		"""
@@ -34,8 +54,9 @@ class CombatPropertys:
 			return
 			
 		self.HP = v
-			
-	def addMP(self, val):
+
+	@Def.method()	
+	def addMP(self, val : Types.MP):
 		"""
 		defined.
 		"""
@@ -47,8 +68,9 @@ class CombatPropertys:
 			return
 			
 		self.MP = v
-		
-	def setHP(self, hp):
+	
+	@Def.method()
+	def setHP(self, hp : Types.HP):
 		"""
 		defined
 		"""
@@ -61,7 +83,8 @@ class CombatPropertys:
 			
 		self.HP = hp
 
-	def setMP(self, mp):
+	@Def.method()
+	def setMP(self, mp : Types.MP):
 		"""
 		defined
 		"""
@@ -74,14 +97,16 @@ class CombatPropertys:
 			
 		self.MP = mp
 
-	def setHPMax(self, hpmax):
+	@Def.method()
+	def setHPMax(self, hpmax : Types.HP):
 		"""
 		defined
 		"""
 		hpmax = int(hpmax)
 		self.HP_Max = hpmax
-			
-	def setMPMax(self, mpmax):
+	
+	@Def.method()
+	def setMPMax(self, mpmax : Types.MP):
 		"""
 		defined
 		"""

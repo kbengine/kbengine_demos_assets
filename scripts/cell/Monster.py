@@ -3,7 +3,7 @@ import random
 import math
 import time
 import KBEngine
-import SCDefine
+import GlobalDefine
 from KBEDebug import *
 from interfaces.Combat import Combat
 from interfaces.Spell import Spell
@@ -12,7 +12,11 @@ from interfaces.State import State
 from interfaces.Flags import Flags
 from interfaces.AI import AI
 from interfaces.NPCObject import NPCObject
+import EntityDef as Def
 
+# 定义一个entity
+# hasClient告诉引擎，该实体包含客户端部分
+@Def.entity(hasClient=True)
 class Monster(KBEngine.Entity,
 			NPCObject, 
 			Flags,

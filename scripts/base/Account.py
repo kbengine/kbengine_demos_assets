@@ -4,12 +4,17 @@ import random
 import time
 import d_spaces
 import GlobalConst
-from AVATAR_INFOS import TAvatarInfos
-from AVATAR_INFOS import TAvatarInfosList
-from AVATAR_DATA import TAvatarData
+from Types import AVATAR_INFOS
+from Types import AVATAR_INFOS_LIST
+from Types import AVATAR_DATA
 from KBEDebug import *
 import d_avatar_inittab
+import EntityDef as Def
+import Types
 
+# 定义一个entity
+# hasClient告诉引擎，该实体包含客户端部分
+@Def.entity(hasClient=True)
 class Account(KBEngine.Proxy):
 	"""
 	账号实体
@@ -20,6 +25,23 @@ class Account(KBEngine.Proxy):
 		self.activeAvatar = None
 		self.relogin = time.time()
 	
+	@Def.property(flags=Def.BASE, persistent=True)
+	def characters(self) -> Types.AVATAR_INFOS_LIST:
+		pass
+	
+	@Def.property(flags=Def.BASE_AND_CLIENT, persistent=True)
+	def lastSelCharacter(self) -> Types.DBID:
+		pass
+
+	@Def.property(flags=Def.BASE)
+	def activeCharacter(self) -> Def.ENTITYCALL:
+		pass
+
+	@Def.property(flags=Def.BASE)
+	def lastClientIpAddr(self) -> Def.UINT32:
+		return 0
+
+	@Def.method(exposed=True)
 	def reqAvatarList(self):
 		"""
 		exposed.
@@ -27,14 +49,15 @@ class Account(KBEngine.Proxy):
 		"""
 		DEBUG_MSG("Account[%i].reqAvatarList: size=%i." % (self.id, len(self.characters)))
 		self.client.onReqAvatarList(self.characters)
-				
-	def reqCreateAvatar(self, roleType, name):
+
+	@Def.method(exposed=True)
+	def reqCreateAvatar(self, roleType : Def.UINT8, name : Def.UNICODE):
 		"""
 		exposed.
 		客户端请求创建一个角色
 		"""
-		avatarinfo = TAvatarInfos()
-		avatarinfo.extend([0, "", 0, 0, TAvatarData().createFromDict({"param1" : 0, "param2" :b''})])
+		avatarinfo = AVATAR_INFOS()
+		avatarinfo.extend([0, "", 0, 0, AVATAR_DATA().createFromDict({"param1" : 0, "param2" :b''})])
 			
 		"""
 		if name in all_avatar_names:
@@ -88,8 +111,9 @@ class Account(KBEngine.Proxy):
 			avatar.writeToDB(self._onAvatarSaved)
 		
 		DEBUG_MSG("Account[%i].reqCreateAvatar:%s. spaceUType=%i, spawnPos=%s.\n" % (self.id, name, avatar.cellData["spaceUType"], spaceData.get("spawnPos", (0,0,0))))
-		
-	def reqRemoveAvatar(self, name):
+	
+	@Def.method(exposed=True)
+	def reqRemoveAvatar(self, name : Def.UNICODE):
 		"""
 		exposed.
 		客户端请求删除一个角色
@@ -103,8 +127,9 @@ class Account(KBEngine.Proxy):
 				break
 		
 		self.client.onRemoveAvatar(found)
-		
-	def reqRemoveAvatarDBID(self, dbid):
+	
+	@Def.method(exposed=True)
+	def reqRemoveAvatarDBID(self, dbid : Types.DBID):
 		"""
 		exposed.
 		客户端请求删除一个角色
@@ -118,7 +143,8 @@ class Account(KBEngine.Proxy):
 
 		self.client.onRemoveAvatar(found)
 
-	def selectAvatarGame(self, dbid):
+	@Def.method(exposed=True)
+	def selectAvatarGame(self, dbid : Types.DBID):
 		"""
 		exposed.
 		客户端选择某个角色进行游戏
@@ -137,7 +163,28 @@ class Account(KBEngine.Proxy):
 				ERROR_MSG("Account[%i]::selectAvatarGame: not found dbid(%i)" % (self.id, dbid))
 		else:
 			self.giveClientTo(self.activeAvatar)
-		
+	
+	@Def.clientmethod()
+	def onReqAvatarList(self, infos : Types.AVATAR_INFOS_LIST):
+		"""
+		defined method.
+		"""
+		pass
+
+	@Def.clientmethod()
+	def onCreateAvatarResult(self, retcode : Def.UINT8, info : Types.AVATAR_INFOS):
+		"""
+		defined method.
+		"""
+		pass
+
+	@Def.clientmethod()
+	def onRemoveAvatar(self, dbid : Types.DBID):
+		"""
+		defined method.
+		"""
+		pass
+
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
 	#--------------------------------------------------------------------------------------------
@@ -250,12 +297,12 @@ class Account(KBEngine.Proxy):
 				
 			return
 			
-		avatarinfo = TAvatarInfos()
-		avatarinfo.extend([0, "", 0, 0, TAvatarData().createFromDict({"param1" : 0, "param2" :b''})])
+		avatarinfo = AVATAR_INFOS()
+		avatarinfo.extend([0, "", 0, 0, AVATAR_DATA().createFromDict({"param1" : 0, "param2" :b''})])
 
 		if success:
-			info = TAvatarInfos()
-			info.extend([avatar.databaseID, avatar.cellData["name"], avatar.roleType, 1, TAvatarData().createFromDict({"param1" : 1, "param2" :b'1'})])
+			info = AVATAR_INFOS()
+			info.extend([avatar.databaseID, avatar.cellData["name"], avatar.roleType, 1, AVATAR_DATA().createFromDict({"param1" : 1, "param2" :b'1'})])
 			self.characters[avatar.databaseID] = info
 			avatarinfo[0] = avatar.databaseID
 			avatarinfo[1] = avatar.cellData["name"]

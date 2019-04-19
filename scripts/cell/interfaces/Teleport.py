@@ -2,12 +2,20 @@
 import KBEngine
 import SpaceContext
 from KBEDebug import * 
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class Teleport:
 	def __init__(self):
 		pass
 		
-	def teleportSpace(self, spaceUType, position, direction, context):
+	@Def.property(flags=Def.CELL_PUBLIC_AND_OWN, persistent=True)
+	def spaceUType(self) -> Def.UINT32:
+		return None
+
+	@Def.method()
+	def teleportSpace(self, spaceUType : Types.ENTITY_UTYPE, position : Types.POSITION3D, direction : Types.DIRECTION3D, context : Def.PYTHON):
 		"""
 		defined.
 		传送到某场景
@@ -24,7 +32,8 @@ class Teleport:
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
 	#--------------------------------------------------------------------------------------------
-	def onTeleportSpaceCB(self, spaceCellEntityCall, spaceUType, position, direction):
+	@Def.method()
+	def onTeleportSpaceCB(self, spaceCellEntityCall : Def.ENTITYCALL, spaceUType : Types.ENTITY_UTYPE, position : Types.POSITION3D, direction : Types.DIRECTION3D):
 		"""
 		defined.
 		baseapp返回teleportSpace的回调
@@ -35,7 +44,7 @@ class Teleport:
 		
 		self.getCurrSpaceBase().onLeave(self.id)
 		self.teleport(spaceCellEntityCall, position, direction)
-		
+	
 	def onTeleportSuccess(self, nearbyEntity):
 		"""
 		KBEngine method.

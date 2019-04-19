@@ -2,9 +2,12 @@
 import KBEngine
 import skills
 import GlobalConst
-import SCDefine
+import GlobalDefine
 from KBEDebug import * 
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class SkillBox:
 	def __init__(self):
 		# 如果玩家没有学习技能，默认添加这些技能
@@ -17,6 +20,10 @@ class SkillBox:
 			self.skills.append(5000101)
 			self.skills.append(6000101)
 
+	@Def.property(flags=Def.CELL_PRIVATE, persistent=True)
+	def skills(self) -> Types.SKILLID_LIST:
+		pass
+
 	def hasSkill(self, skillID):
 		"""
 		"""
@@ -25,7 +32,8 @@ class SkillBox:
 	#--------------------------------------------------------------------------------------------
 	#                              defined
 	#--------------------------------------------------------------------------------------------
-	def requestPull(self, exposed):
+	@Def.method(exposed=True)
+	def requestPull(self, exposed : Def.CALLER_ID):
 		"""
 		exposed
 		"""
@@ -35,20 +43,23 @@ class SkillBox:
 		DEBUG_MSG("SkillBox::requestPull: %i skills=%i" % (self.id, len(self.skills)))
 		for skillID in self.skills:
 			self.client.onAddSkill(skillID)
-			
-	def addSkill(self, skillID):
+	
+	@Def.method()
+	def addSkill(self, skillID : Types.SKILLID):
 		"""
 		defined method.
 		"""
 		self.skills.append(skillID)
 
-	def removeSkill(self, skillID):
+	@Def.method()
+	def removeSkill(self, skillID : Types.SKILLID):
 		"""
 		defined method.
 		"""
 		self.skills.remove(skillID)
-		
-	def useTargetSkill(self, srcEntityID, skillID, targetID):
+	
+	@Def.method(exposed=True)
+	def useTargetSkill(self, srcEntityID : Def.CALLER_ID, skillID : Types.SKILLID, targetID : Types.ENTITY_ID):
 		"""
 		exposed.
 		对一个目标entity施放一个技能
@@ -57,3 +68,12 @@ class SkillBox:
 			return
 		
 		self.spellTarget(skillID, targetID)
+
+	@Def.clientmethod()
+	def onAddSkill(self, skillID : Types.SKILLID):
+		pass
+
+	@Def.clientmethod()
+	def onRemoveSkill(self, skillID : Types.SKILLID):
+		pass
+	

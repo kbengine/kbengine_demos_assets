@@ -6,7 +6,11 @@ import KBEngine
 from KBEDebug import *
 from interfaces.NPCObject import NPCObject
 from interfaces.Motion import Motion
+import EntityDef as Def
 
+# 定义一个entity
+# hasClient告诉引擎，该实体包含客户端部分
+@Def.entity(hasClient=True)
 class NPC(KBEngine.Entity, NPCObject, Motion):
 	def __init__(self):
 		KBEngine.Entity.__init__(self)

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import KBEngine
 import d_spaces
-import SCDefine
 import GlobalDefine
 from KBEDebug import * 
+import EntityDef as Def
+import Types
 
 import d_entities
 import d_avatar_inittab
 
+@Def.interface()
 class GameObject:
 	"""
 	服务端游戏对象的基础接口类
@@ -74,9 +76,33 @@ class GameObject:
 		启动销毁entitytimer
 		"""
 		if self.isState(GlobalDefine.ENTITY_STATE_DEAD):
-			self.addTimer(5, 0, SCDefine.TIMER_TYPE_DESTROY)
+			self.addTimer(5, 0, GlobalDefine.TIMER_TYPE_DESTROY)
 			DEBUG_MSG("%s::startDestroyTimer: %i running." % (self.getScriptName(), self.id))
 	
+	@Def.property(flags=Def.ALL_CLIENTS, persistent=True)
+	def name(self) -> Def.UNICODE:
+		return None
+
+	@Def.property(flags=Def.ALL_CLIENTS, persistent=True)
+	def uid(self) -> Def.UINT32:
+		return None
+
+	@Def.property(flags=Def.CELL_PUBLIC, persistent=True)
+	def dbid(self) -> Types.DBID:
+		return None
+
+	@Def.property(flags=Def.ALL_CLIENTS, persistent=True)
+	def utype(self) -> Def.UINT32:
+		return None
+
+	@Def.property(flags=Def.ALL_CLIENTS)
+	def modelID(self) -> Def.UINT32:
+		return None
+
+	@Def.property(flags=Def.ALL_CLIENTS, persistent=True)
+	def modelScale(self) -> Def.UINT8:
+		return 30
+
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
 	#--------------------------------------------------------------------------------------------
@@ -86,7 +112,7 @@ class GameObject:
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_DESTROY == userArg:
+		if GlobalDefine.TIMER_TYPE_DESTROY == userArg:
 			self.onDestroyEntityTimer()
 			
 	def onStateChanged_(self, oldstate, newstate):

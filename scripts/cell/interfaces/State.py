@@ -5,7 +5,10 @@
 """
 import GlobalDefine
 from KBEDebug import *
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class State:
 	"""
 	"""
@@ -19,6 +22,22 @@ class State:
 		"""
 		pass
 		
+	@Def.property(flags=Def.ALL_CLIENTS, persistent=True)
+	def state(self) -> Types.ENTITY_STATE:
+		return 0
+
+	@Def.property(flags=Def.ALL_CLIENTS)
+	def subState(self) -> Types.ENTITY_SUBSTATE:
+		pass
+
+	@Def.property(flags=Def.ALL_CLIENTS)
+	def forbids(self) -> Types.ENTITY_FORBIDS:
+		return 0
+
+	@Def.property(flags=Def.CELL_PRIVATE)
+	def _forbidCounter(self) -> Types.ENTITY_FORBID_COUNTER:
+		pass
+
 	def isState(self, state):
 		return self.state == state
 	
@@ -115,7 +134,8 @@ class State:
 	#--------------------------------------------------------------------------------------------
 	#                              defined
 	#--------------------------------------------------------------------------------------------
-	def changeState(self, state):
+	@Def.method()
+	def changeState(self, state : Types.ENTITY_STATE):
 		"""
 		defined
 		改变当前主状态

@@ -2,12 +2,15 @@
 import KBEngine
 import Functor
 import d_spaces
-import SCDefine
+import GlobalDefine
 import Watcher
 from KBEDebug import *
 from SpaceAlloc import *
 from interfaces.GameObject import GameObject
+import EntityDef as Def
+import Types
 
+@Def.entity()
 class Spaces(KBEngine.Entity, GameObject):
 	"""
 	这是一个脚本层封装的空间管理器
@@ -26,7 +29,7 @@ class Spaces(KBEngine.Entity, GameObject):
 	def initAlloc(self):
 		# 注册一个定时器，在这个定时器中我们每个周期都创建出一些NPC，直到创建完所有
 		self._spaceAllocs = {}
-		self.addTimer(3, 1, SCDefine.TIMER_TYPE_CREATE_SPACES)
+		self.addTimer(3, 1, GlobalDefine.TIMER_TYPE_CREATE_SPACES)
 		
 		self._tmpDatas = list(d_spaces.datas.keys())
 		for utype in self._tmpDatas:
@@ -50,15 +53,17 @@ class Spaces(KBEngine.Entity, GameObject):
 		if len(self._tmpDatas) <= 0:
 			del self._tmpDatas
 			self.delTimer(tid)
-			
-	def loginToSpace(self, avatarEntity, spaceUType, context):
+	
+	@Def.method()
+	def loginToSpace(self, avatarEntity : Def.ENTITYCALL, spaceUType : Types.ENTITY_UTYPE, context : Def.PYTHON):
 		"""
 		defined method.
 		某个玩家请求登陆到某个space中
 		"""
 		self._spaceAllocs[spaceUType].loginToSpace(avatarEntity, context)
 	
-	def logoutSpace(self, avatarID, spaceKey):
+	@Def.method()
+	def logoutSpace(self, avatarID : Types.ENTITY_ID, spaceKey : Types.SPACE_ID):
 		"""
 		defined method.
 		某个玩家请求登出这个space
@@ -67,8 +72,9 @@ class Spaces(KBEngine.Entity, GameObject):
 			space = spaceAlloc.getSpaces().get(spaceKey)
 			if space:
 				space.logoutSpace(avatarID)
-				
-	def teleportSpace(self, entityCall, spaceUType, position, direction, context):
+
+	@Def.method()		
+	def teleportSpace(self, entityCall : Def.ENTITYCALL, spaceUType : Types.ENTITY_UTYPE, position : Types.POSITION3D, direction : Types.POSITION3D, context : Def.PYTHON):
 		"""
 		defined method.
 		请求进入某个space中
@@ -84,19 +90,21 @@ class Spaces(KBEngine.Entity, GameObject):
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_CREATE_SPACES == userArg:
+		if GlobalDefine.TIMER_TYPE_CREATE_SPACES == userArg:
 			self.createSpaceOnTimer(tid)
 		
 		GameObject.onTimer(self, tid, userArg)
 		
-	def onSpaceLoseCell(self, spaceUType, spaceKey):
+	@Def.method()
+	def onSpaceLoseCell(self, spaceUType : Types.ENTITY_UTYPE, spaceKey : Types.DBID):
 		"""
 		defined method.
 		space的cell创建好了
 		"""
 		self._spaceAllocs[spaceUType].onSpaceLoseCell(spaceKey)
 		
-	def onSpaceGetCell(self, spaceUType, spaceEntityCall, spaceKey):
+	@Def.method()
+	def onSpaceGetCell(self, spaceUType : Types.ENTITY_UTYPE, spaceEntityCall : Def.ENTITYCALL, spaceKey : Types.DBID):
 		"""
 		defined method.
 		space的cell创建好了

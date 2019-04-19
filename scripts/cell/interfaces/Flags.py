@@ -5,12 +5,19 @@
 
 import GlobalDefine
 from KBEDebug import *
+import EntityDef as Def
+import Types
 
+@Def.interface()
 class Flags:
 	"""
 	"""
 	def __init__(self):
 		pass
+
+	@Def.property(flags=Def.CELL_PUBLIC)
+	def flags(self) -> Def.INT32:
+		return 0
 
 	def setFlags(self, flags):
 		self.flags = flags

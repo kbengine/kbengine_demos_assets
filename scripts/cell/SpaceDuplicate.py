@@ -5,15 +5,17 @@ from KBEDebug import *
 from Space import Space
 import d_entities
 import d_spaces
-import SCDefine
+import GlobalDefine
+import EntityDef as Def
 
+@Def.entity()
 class SpaceDuplicate(Space):
 	def __init__(self):
 		Space.__init__(self)
 		
 		self.avatars = {}
 		
-		self.addTimer(30, 10, SCDefine.TIMER_TYPE_HEARDBEAT)
+		self.addTimer(30, 10, GlobalDefine.TIMER_TYPE_HEARDBEAT)
 		
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
@@ -24,7 +26,7 @@ class SpaceDuplicate(Space):
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_HEARDBEAT == userArg:
+		if GlobalDefine.TIMER_TYPE_HEARDBEAT == userArg:
 			self.onCheckDestroyTimer()
 		
 		Space.onTimer(self, tid, userArg)

@@ -4,7 +4,9 @@ import GlobalConst
 import d_spaces
 import d_avatar_inittab
 from KBEDebug import * 
+import EntityDef as Def
 
+@Def.interface()
 class Teleport:
 	def __init__(self):
 		# 如果登录是一个副本, 无论如何登录都放置在主场景上

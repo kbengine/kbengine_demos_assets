@@ -4,7 +4,7 @@
 """
 import KBEngine
 import copy
-import scdefine
+import GlobalDefine
 import scutils
 import skills
 import ScriptMaps

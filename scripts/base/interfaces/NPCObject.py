@@ -2,7 +2,9 @@
 import KBEngine
 from KBEDebug import *
 from interfaces.GameObject import GameObject
+import EntityDef as Def
 
+@Def.interface()
 class NPCObject(GameObject):
 	"""
 	所有非角色的实体接口类

@@ -2,12 +2,14 @@
 import random
 import math
 import time
-import SCDefine
+import GlobalDefine
 import d_spaces
 import KBEngine
 from KBEDebug import *
 from interfaces.GameObject import GameObject
+import EntityDef as Def
 
+@Def.entity()
 class Gate(KBEngine.Entity, GameObject):
 	"""
 	这是一个传送门实体，当玩家进入传送门“self.addProximity(5.0, 0, 0)”的区域，
@@ -17,7 +19,7 @@ class Gate(KBEngine.Entity, GameObject):
 		KBEngine.Entity.__init__(self)
 		GameObject.__init__(self) 
 		
-		self.addTimer(1, 0, SCDefine.TIMER_TYPE_HEARDBEAT)				# 心跳timer, 每1秒一次
+		self.addTimer(1, 0, GlobalDefine.TIMER_TYPE_HEARDBEAT)				# 心跳timer, 每1秒一次
 
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
@@ -28,7 +30,7 @@ class Gate(KBEngine.Entity, GameObject):
 		引擎回调timer触发
 		"""
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
-		if SCDefine.TIMER_TYPE_HEARDBEAT == userArg:
+		if GlobalDefine.TIMER_TYPE_HEARDBEAT == userArg:
 			self.onHeardTimer()
 		
 		GameObject.onTimer(self, tid, userArg)

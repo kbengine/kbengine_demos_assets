@@ -11,7 +11,12 @@ from interfaces.State import State
 from interfaces.Flags import Flags
 from interfaces.Motion import Motion
 from interfaces.SkillBox import SkillBox
+import EntityDef as Def
+import Types
 
+from components.TestNoBase import TestNoBase
+
+@Def.entity()
 class Avatar(KBEngine.Entity,
 			GameObject, 
 			Flags,
@@ -41,6 +46,22 @@ class Avatar(KBEngine.Entity,
 		# 如果为7说明在UE4地图中，那么为了配合demo的移动速度，我们将限制设置得更大一些
 		if self.spaceUType == 7:
 			self.topSpeed = 0
+
+	@Def.property(flags=Def.CELL_PUBLIC_AND_OWN, persistent=True)
+	def level(self) -> Def.UINT16:
+		return None
+
+	#@Def.property(flags=Def.ALL_CLIENTS, persistent=True, index=Def.UNIQUE, databaseLength=32)
+	#def playerName(self) -> Def.UNICODE:
+	#	return None
+
+	@Def.property(flags=Def.OWN_CLIENT)
+	def own_val(self) -> Def.UINT16:
+		return None
+
+	@Def.component(persistent=True)
+	def component3(self) -> TestNoBase:
+		return None
 
 	def isPlayer(self):
 		"""
@@ -90,13 +111,14 @@ class Avatar(KBEngine.Entity,
 		DEBUG_MSG("Avatar::onDestroy: %i." % self.id)
 		Teleport.onDestroy(self)
 		Combat.onDestroy(self)
-		
-	def relive(self, exposed, type):
+	
+	@Def.method(exposed=True)
+	def relive(self, callerID : Def.CALLER_ID, type : Def.UINT8):
 		"""
 		defined.
 		复活
 		"""
-		if exposed != self.id:
+		if callerID != self.id:
 			return
 			
 		DEBUG_MSG("Avatar::relive: %i, type=%i." % (self.id, type))
@@ -108,16 +130,24 @@ class Avatar(KBEngine.Entity,
 		self.fullPower()
 		self.changeState(GlobalDefine.ENTITY_STATE_FREE)
 
-	def jump(self, exposed):
+	@Def.method(exposed=True)
+	def jump(self, callerID : Def.CALLER_ID):
 		"""
 		defined.
 		玩家跳跃 我们广播这个行为
 		"""
-		if exposed != self.id:
+		if callerID != self.id:
 			return
 		
 		self.otherClients.onJump()
-		
+	
+	@Def.clientmethod()
+	def onJump(self):
+		"""
+		声明客户端def方法
+		"""
+		pass
+
 	def onAddEnemy(self, entityID):
 		"""
 		virtual method.
