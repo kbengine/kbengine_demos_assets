@@ -6,12 +6,36 @@ import EntityDef as Def
 
 # ------------------------------------------------------------------------------
 # 定义数据类型， 类似types.xml的定义功能
-# 定义数据类型有二种方法:
+# 定义基础数据类型有二种方法:
 # 	1: 简单注册一个类型， IDE可能无法自动提示
 # 		Def.rename(OBJECT_ID=Def.INT32) 
 #	2: 使用装饰器注册，IDE可以自动提示OBJECT_ID
 # 		@Def.rename()
 #		def OBJECT_ID() -> Def.INT32: pass
+#
+# 定义数组类型：
+#	@Def.fixed_array()
+#	def ID_LIST() -> Def.INT32: pass
+#
+# 定义字典类型：
+#	@Def.fixed_dict()
+#	class FIXEDDICT_DATA(dict):
+#		@Def.fixed_item()
+#		def param1(self) -> Def.INT8:
+# 		return None
+#
+#	# 如果实现了createObjFromDict、getDictFromObj、isSameType引擎将会把序列化和反序列化改数据类型的工作交给脚本处理，否则底层按默认格式处理
+#	@staticmethod
+#	def createObjFromDict(dct):
+#		self.param1 = dct["param1"]
+#
+#	@staticmethod
+#	def getDictFromObj(obj):
+#		return {"param1" : obj.param1}
+#
+#	@staticmethod
+#	def isSameType(obj):
+#		return isinstance(obj, FIXEDDICT_DATA)
 # ------------------------------------------------------------------------------
 @Def.rename()
 def OBJECT_ID() -> Def.INT32: pass
