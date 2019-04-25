@@ -110,7 +110,7 @@
 定义数组类型：
 
 	@Def.fixed_array()
-		def ID_LIST() -> Def.INT32: pass
+	def ID_LIST() -> Def.INT32: pass
 
 定义字典类型：
 
