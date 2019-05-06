@@ -59,6 +59,9 @@ class Avatar(KBEngine.Entity,
 		当这个entity被引擎定义为角色时被调用
 		"""
 		DEBUG_MSG("%s::onBecomePlayer: %i" % (self.__class__.__name__, self.id))
+
+	def onBecomeNonPlayer(self):
+		DEBUG_MSG("%s::onBecomeNonPlayer: %i" % (self.__class__.__name__, self.id))
 		
 	def onJump(self):
 		"""
