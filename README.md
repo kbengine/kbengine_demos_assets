@@ -85,7 +85,7 @@
 	def test1(self, type : Def.UINT8):
 		pass
 
-	# @Def.component给实体挂在一个组件。
+	# @Def.component给实体挂载一个组件。
 	# persistent=True描述该组件是否参与持久化。注意：仅仅持久化组件内部属性定义为persistent=True的属性数据。
 	# “-> Test” Test是demo中的组件脚本，参考base/Avatar.py中定义的用法。
 	# 组件以实体属性的形式存在，component1为组件属性名称，可以通过self.component1来访问。
@@ -110,7 +110,7 @@
 定义数组类型：
 
 	@Def.fixed_array()
-		def ID_LIST() -> Def.INT32: pass
+	def ID_LIST() -> Def.INT32: pass
 
 定义字典类型：
 
