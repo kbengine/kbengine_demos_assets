@@ -29,13 +29,6 @@
 			<Default>		1002						</Default>
 		</cc>
 	</Properties>
-
-	<CellEvents>
-		<hello>
-			<Exposed/>
-			<Arg>			INT32						</Arg>
-		</hello>
-	</CellEvents>
 	
 	<CellMethods>
 		<hello>
