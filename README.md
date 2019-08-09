@@ -41,3 +41,8 @@
 
 	Windows:
 		safe_kill.bat
+
+
+## 直接从代码定义实体（不需要def文件）
+
+https://github.com/kbengine/kbengine_demos_assets/tree/py_entity_def
